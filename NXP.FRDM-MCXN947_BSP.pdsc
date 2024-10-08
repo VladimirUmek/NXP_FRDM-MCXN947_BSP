@@ -6,6 +6,7 @@
   <url>https://mcuxpresso.nxp.com/cmsis_pack/repo/</url>
   <license>Licenses.txt</license>
   <releases>
+    <release version="19.1.0">Development version...</release>
     <release version="19.0.0" date="2024-07-17">NXP CMSIS Packs based on MCUXpresso SDK 2.16.0</release>
     <release version="17.0.0" date="2024-01-29">NXP CMSIS Packs based on MCUXpresso SDK 2.14.0</release>
   </releases>
@@ -81,6 +82,12 @@
     <condition id="allOf.utility.assert_lite, utility.debug_console_lite.internal_condition">
       <require Cclass="Device" Cgroup="SDK Utilities" Csub="assert_lite"/>
       <require Cclass="Device" Cgroup="SDK Utilities" Csub="debug_console_lite"/>
+    </condition>
+    <condition id="CMSIS_Driver_VIO">
+      <require condition="board.frdmmcxn947.internal_condition"/>
+      <require Cclass="Device" Cgroup="Config Tools" Csub="Init"/>
+      <require Cclass="Device" Cgroup="SDK Drivers" Csub="clock"/>
+      <require Cclass="Device" Cgroup="SDK Drivers" Csub="gpio"/>
     </condition>
   </conditions>
   <examples>
@@ -1700,6 +1707,16 @@
         <file category="header" attr="config" name="boards/frdmmcxn947/project_template/peripherals.h" version="1.0.0" projectpath="board"/>
         <file category="sourceC" attr="config" name="boards/frdmmcxn947/project_template/peripherals.c" version="1.0.0" projectpath="board"/>
         <file category="include" name="boards/frdmmcxn947/project_template/"/>
+      </files>
+    </component>
+    <component Cclass="CMSIS Driver" Cgroup="VIO" Csub="Board" Cvariant="FRDM-MCXN947" Cversion="1.0.0" Capiversion="1.0.0" condition="CMSIS_Driver_VIO">
+      <description>Virtual I/O implementation for FRDM-MCXN947</description>
+      <RTE_Components_h>
+        #define RTE_VIO_BOARD
+        #define RTE_VIO_FRDM_MCXN947
+      </RTE_Components_h>
+      <files>
+        <file category="source" name="boards/frdmmcxn947/cmsis/drivers/vio_FRDM-MCXN947.c"/>
       </files>
     </component>
   </components>
