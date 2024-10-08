@@ -1,0 +1,39 @@
+layer:
+  type: Board
+  description: Board setup for bare metal application
+  for-board: NXP::FRDM-MCXN947
+  for-device: NXP::MCXN947VDF:cm33_core0
+  processor:
+    trustzone: secure
+
+  connections:
+    - connect: FRDM-MCXN947 Board
+      provides:
+        - Heap: 1024
+
+  packs:
+    - pack: ARM::CMSIS@^6.0.0
+    - pack: NXP::FRDM-MCXN947_BSP@^19.0.0
+    - pack: NXP::MCXN947_DFP@19.0.0
+
+  components:
+    - component: CMSIS:CORE
+
+    - component: NXP::Device:Startup
+    - component: NXP::Device:CMSIS:MCXN947_header
+    - component: NXP::Device:CMSIS:MCXN947_system
+    - component: NXP::Device:Config Tools:Init
+
+    - component: NXP::Device:SDK Drivers:clock
+    - component: NXP::Device:SDK Drivers:common
+    - component: NXP::Device:SDK Drivers:mcx_spc
+    - component: NXP::Device:SDK Drivers:reset
+
+  groups:
+    - group: Board
+      files:
+        - file: ./main.c
+        - file: ./main.h
+
+  linker:
+    - script: RTE/Device/MCXN947VDF_cm33_core0/MCXN947_cm33_core0_flash.scf

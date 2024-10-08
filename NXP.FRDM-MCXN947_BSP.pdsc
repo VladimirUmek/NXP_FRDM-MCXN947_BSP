@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="PACK.xsd" schemaVersion="1.4">
+<package xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.40/schema/PACK.xsd" schemaVersion="1.7.40">
   <name>FRDM-MCXN947_BSP</name>
   <vendor>NXP</vendor>
   <description>Board Support Pack for FRDM-MCXN947</description>
@@ -88,6 +88,9 @@
       <require Cclass="Device" Cgroup="Config Tools" Csub="Init"/>
       <require Cclass="Device" Cgroup="SDK Drivers" Csub="clock"/>
       <require Cclass="Device" Cgroup="SDK Drivers" Csub="gpio"/>
+    </condition>
+    <condition id="Board_Layer">
+      <require Bvendor="NXP" Bname="FRDM-MCXN947"/>
     </condition>
   </conditions>
   <examples>
@@ -1720,4 +1723,7 @@
       </files>
     </component>
   </components>
+  <csolution> 
+    <clayer type="Board" path="boards/frdmmcxn947/cmsis/layers/baremetal" file="Board.clayer.yml" copy-to="Board/FRDM-MCXN947" condition="Board_Layer"/>
+  </csolution>
 </package>
