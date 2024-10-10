@@ -1724,6 +1724,7 @@
     </component>
   </components>
   <csolution> 
-    <clayer type="Board" path="boards/frdmmcxn947/cmsis/layers/baremetal" file="Board.clayer.yml" copy-to="Board/FRDM-MCXN947" condition="Board_Layer"/>
+    <clayer type="Board" path="boards/frdmmcxn947/cmsis/layers/baremetal"  file="Board.clayer.yml" copy-to="Board/FRDM-MCXN947" condition="Board_Layer"/>
+    <clayer type="Board" path="boards/frdmmcxn947/cmsis/layers/sensor_sdk" file="Board.clayer.yml" copy-to="Board/FRDM-MCXN947" condition="Board_Layer"/>
   </csolution>
 </package>
