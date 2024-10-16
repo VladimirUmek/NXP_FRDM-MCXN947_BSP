@@ -94,6 +94,13 @@
     <condition id="Board_Layer">
       <require Bvendor="NXP" Bname="FRDM-MCXN947"/>
     </condition>
+    <condition id="Template_Board">
+      <require Bvendor="NXP" Bname="FRDM-MCXN947"/>
+    </condition>
+    <condition id="Template_Device">
+      <accept condition="device.MCXN946.internal_condition"/>
+      <accept condition="device.MCXN947.internal_condition"/>
+    </condition>
   </conditions>
   <examples>
     <example name="cdog" folder="boards/frdmmcxn947/driver_examples/cdog/cm33_core0" doc="readme.md">
@@ -1728,5 +1735,15 @@
   <csolution> 
     <clayer type="Board" path="boards/frdmmcxn947/cmsis/layers/baremetal"  file="Board.clayer.yml" copy-to="Board/FRDM-MCXN947" condition="Board_Layer"/>
     <clayer type="Board" path="boards/frdmmcxn947/cmsis/layers/sensor_sdk" file="Board.clayer.yml" copy-to="Board/FRDM-MCXN947" condition="Board_Layer"/>
+
+    <template name="Simple MCU project" path="Templates/MCU/Simple" file="Simple.csolution.yml" condition="Template_Device">
+      <description>Single-core project without TrustZone using MCUXpresso Config Tools</description>
+    </template>
+    <template name="TrustZone MCU project" path="Templates/MCU/TrustZone" file="TrustZone.csolution.yml" condition="Template_Device">
+      <description>Single-core project with TrustZone</description>
+    </template>
+    <template name="Simple Board project" path="Templates/Board/Simple" file="Simple.csolution.yml" condition="Template_Board">
+      <description>Single-core project without TrustZone using MCUXpresso configured for FRDM-MCXN947 Board</description>
+    </template>
   </csolution>
 </package>
