@@ -54,12 +54,12 @@ __USED uint32_t vioSignalOut;               // Memory for outgoing signal
 __USED int32_t  vioValue[VIO_VALUE_NUM];    // Memory for value used in vioGetValue/vioSetValue
 
 #if !defined CMSIS_VOUT
-#define LED_0_GPIO                      GPIO0
-#define LED_0_PIN                       10U
-#define LED_1_GPIO                      GPIO0
-#define LED_1_PIN                       27U
-#define LED_2_GPIO                      GPIO1
-#define LED_2_PIN                       2U
+#define LED_0_GPIO                      GPIO0 /* BOARD_INITLEDSPINS_LED_RED_GPIO */
+#define LED_0_PIN                       10U   /* BOARD_INITLEDSPINS_LED_RED_GPIO_PIN */
+#define LED_1_GPIO                      GPIO0 /* BOARD_INITLEDSPINS_LED_GREEN_GPIO */
+#define LED_1_PIN                       27U   /* BOARD_INITLEDSPINS_LED_GREEN_GPIO_PIN */
+#define LED_2_GPIO                      GPIO1 /* BOARD_INITLEDSPINS_LED_BLUE_GPIO */
+#define LED_2_PIN                       2U    /* BOARD_INITLEDSPINS_LED_BLUE_GPIO_PIN */
 
 #define LED_INIT_ON                     (0U)
 #define LED_INIT_OFF                    (1U)
@@ -74,10 +74,10 @@ __USED int32_t  vioValue[VIO_VALUE_NUM];    // Memory for value used in vioGetVa
 #endif
 
 #if !defined CMSIS_VIN
-#define BUTTON_0_GPIO                   GPIO0
-#define BUTTON_0_PIN                    23U
-#define BUTTON_1_GPIO                   GPIO0
-#define BUTTON_1_PIN                    6U
+#define BUTTON_0_GPIO                   GPIO0 /* BOARD_INITBUTTONSPINS_SW2_GPIO */
+#define BUTTON_0_PIN                    23U   /* BOARD_INITBUTTONSPINS_SW2_GPIO_PIN */
+#define BUTTON_1_GPIO                   GPIO0 /* BOARD_INITBUTTONSPINS_SW3_GPIO */
+#define BUTTON_1_PIN                    6U    /* BOARD_INITBUTTONSPINS_SW3_GPIO_PIN */
 #endif
 
 // Initialize test input, output.
@@ -96,7 +96,7 @@ void vioInit (void) {
 
 #if !defined CMSIS_VOUT
   // Initialize LEDs pins
-  BOARD_InitLEDsPins();
+  //BOARD_InitLEDsPins();
 
   // Turn off all LEDs
   LED_INIT(LED_0_GPIO, LED_0_PIN, LED_INIT_OFF);
@@ -106,7 +106,7 @@ void vioInit (void) {
 
 #if !defined CMSIS_VIN
   // Initialize buttons pins
-  BOARD_InitBUTTONsPins();
+  //BOARD_InitBUTTONsPins();
 #endif
 }
 
