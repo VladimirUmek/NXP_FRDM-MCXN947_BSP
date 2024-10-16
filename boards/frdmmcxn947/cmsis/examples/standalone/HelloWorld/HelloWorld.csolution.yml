@@ -1,0 +1,32 @@
+solution:
+  created-for: CMSIS-Toolbox@2.6.0
+
+  generators:
+    options:
+      - generator: MCUXpressoConfig
+        path: ./MCUXpressoConfig
+        name: Board
+
+  select-compiler:
+    - compiler: AC6
+    - compiler: GCC
+  #  - compiler: IAR
+  #  - compiler: CLANG
+
+  compiler: AC6
+
+  target-types:
+    - type: FRDM-MCXN947
+      board: NXP::FRDM-MCXN947
+
+  build-types:
+    - type: Debug
+      debug: on
+      optimize: none
+
+    - type: Release
+      debug: off
+      optimize: balanced
+
+  projects:
+    - project: ./HelloWorld.cproject.yml
