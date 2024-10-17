@@ -17,11 +17,9 @@ solution:
 
   # List different hardware targets that are used to deploy the solution.
   target-types:
-    - type: FRDM-MCXN947_Flash
+    - type: MCXN947VDF
       board: NXP::FRDM-MCXN947
-
-    - type: FRDM-MCXN947_RAM
-      board: NXP::FRDM-MCXN947
+      device: NXP::MCXN947VDF
 
   # List of different build configurations.
   build-types:

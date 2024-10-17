@@ -1,5 +1,6 @@
 # A project translates into one executable or library.
 project:
+  device: :cm33_core0
 
   generators:
     options:
@@ -34,8 +35,6 @@ project:
   linker:
     - script: RTE/Device/MCXN947VDF_cm33_core0/MCXN947_cm33_core0_flash_s.scf
       for-compiler: AC6
-      for-context: +MCXN947_Flash
 
     - script: RTE/Device/MCXN947VDF_cm33_core0/MCXN947_cm33_core0_flash_s.ld
       for-compiler: GCC
-      for-context: +MCXN947_Flash

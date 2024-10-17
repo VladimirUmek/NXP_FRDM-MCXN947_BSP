@@ -17,10 +17,7 @@ solution:
 
   # List different hardware targets that are used to deploy the solution.
   target-types:
-    - type: MCXN947_Flash
-      device: NXP::MCXN947VDF
-
-    - type: MCXN947_RAM
+    - type: MCXN947VDF
       device: NXP::MCXN947VDF
 
   # List of different build configurations.
