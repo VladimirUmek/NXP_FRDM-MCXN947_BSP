@@ -26,6 +26,11 @@ project:
 
     - component: CMSIS:CORE
 
+  groups:
+    - group: Main
+      files:
+        - file: ./main.c
+
   linker:
     - script: RTE/Device/MCXN947VDF_cm33_core0/MCXN947_cm33_core0_flash_s.scf
       for-compiler: AC6
