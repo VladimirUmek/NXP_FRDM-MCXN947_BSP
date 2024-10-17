@@ -1,5 +1,5 @@
 generator-import:
-  generated-by: 'MCUXpresso config tools Generated: 16/10/2024 13:10:52'
+  generated-by: 'MCUXpresso config tools Generated: 17/10/2024 14:53:37'
   for-device: MCXN947
   for-board: FRDM-MCXN947
   groups:
@@ -11,3 +11,4 @@ generator-import:
     - file: board/peripherals.h
     - file: board/pin_mux.c
     - file: board/pin_mux.h
+    - file: utilities/fsl_debug_console_conf.h

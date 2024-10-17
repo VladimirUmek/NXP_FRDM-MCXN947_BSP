@@ -463,6 +463,7 @@
                <clock_outputs>
                   <clock_output id="CLK_144M_clock.outFreq" value="144 MHz" locked="false" accuracy=""/>
                   <clock_output id="CLK_48M_clock.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FLEXCOMM4_clock.outFreq" value="12 MHz" locked="false" accuracy=""/>
                   <clock_output id="FRO_12M_clock.outFreq" value="12 MHz" locked="false" accuracy=""/>
                   <clock_output id="FRO_HF_clock.outFreq" value="48 MHz" locked="false" accuracy=""/>
                   <clock_output id="MAIN_clock.outFreq" value="150 MHz" locked="false" accuracy=""/>
@@ -476,10 +477,12 @@
                   <setting id="PLL0_Mode" value="Normal" locked="false"/>
                   <setting id="RunPowerMode" value="OD" locked="false"/>
                   <setting id="SCGMode" value="PLL0" locked="false"/>
+                  <setting id="FLEXCOMM4CLKDIV_HALT" value="Enable" locked="false"/>
                   <setting id="SCG.PLL0M_MULT.scale" value="50" locked="true"/>
                   <setting id="SCG.PLL0SRCSEL.sel" value="SCG.FIRC_48M" locked="false"/>
                   <setting id="SCG.PLL0_NDIV.scale" value="8" locked="true"/>
                   <setting id="SCG.SCSSEL.sel" value="SCG.PLL0_CLK" locked="false"/>
+                  <setting id="SYSCON.FCCLKSEL4.sel" value="SCG.FRO_12M" locked="false"/>
                   <setting id="SYSCON.FLEXSPICLKSEL.sel" value="NO_CLOCK" locked="false"/>
                   <setting id="SYSCON.FREQMEREFCLKSEL.sel" value="SYSCON.evtg_out0a" locked="false"/>
                   <setting id="SYSCON.FREQMETARGETCLKSEL.sel" value="SYSCON.evtg_out0a" locked="false"/>
@@ -571,9 +574,27 @@
          <dcdx_configurations/>
       </dcdx>
       <periphs name="Peripherals" version="15.0" enabled="true" update_project_code="true">
+         <dependencies>
+            <dependency resourceType="SWComponent" resourceId="utility.debug_console" description="Utility debug_console is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="utility.debug_console" description="An unsupported version of the Utility debug_console in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">1.0.0</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="Tool" resourceId="Clocks" description="The Clocks tool is required by the Peripherals tool, but it is disabled." problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data>true</data>
+               </feature>
+            </dependency>
+         </dependencies>
          <generated_project_files>
             <file path="../MCUXpressoConfig/board/peripherals.c" update_enabled="true"/>
             <file path="../MCUXpressoConfig/board/peripherals.h" update_enabled="true"/>
+            <file path="../MCUXpressoConfig/utilities/fsl_debug_console_conf.h" update_enabled="true"/>
          </generated_project_files>
          <peripherals_profile>
             <processor_version>16.3.0</processor_version>
@@ -582,12 +603,69 @@
             <functional_group name="BOARD_InitPeripherals" uuid="5e271651-63a3-4c90-a121-a23da3522d5c" called_from_default_init="true" id_prefix="" core="cm33_core0">
                <description></description>
                <options/>
-               <dependencies/>
+               <dependencies>
+                  <dependency resourceType="SWComponent" resourceId="component.serial_manager_uart" description="The serial_port_uart driver is missing in the project (required for the Debug console initialization)." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="enabled" evaluation="equal">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="component.lpuart_adapter" description="The lpuart_adapter driver is missing in the project (required for the serial port initialization)." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="enabled" evaluation="equal">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="LP_FLEXCOMM4.uart_rx" description="Signal RX is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="routed" evaluation="equal">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="LP_FLEXCOMM4.uart_tx" description="Signal TX is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="routed" evaluation="equal">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="ClockOutput" resourceId="FLEXCOMM4_clock" description="FLEXCOMM4CLK is inactive." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="frequency" evaluation="greaterThan">
+                        <data type="Frequency" unit="Hz">0</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
                <instances>
                   <instance name="NVIC" uuid="fc2552d9-e298-45e4-81f9-ba49fedf63bd" type="nvic" type_id="nvic" mode="general" peripheral="NVIC" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
                      <config_set name="nvic">
                         <array name="interrupt_table"/>
                         <array name="interrupts"/>
+                     </config_set>
+                  </instance>
+                  <instance name="DebugConsole" uuid="91757ebd-8fa5-4a07-b76e-f4c76cbfe8f4" type="debug_console" type_id="debug_console_1.0.0" mode="general" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="fsl_debug_console">
+                        <struct name="config">
+                           <setting name="SDK_DEBUGCONSOLE" value="DEBUGCONSOLE_REDIRECT_TO_SDK"/>
+                           <setting name="SDK_DEBUGCONSOLE_UART" value="semihost"/>
+                           <setting name="DEBUG_CONSOLE_RX_ENABLE" value="true"/>
+                           <setting name="DEBUG_CONSOLE_PRINTF_MAX_LOG_LEN" value="128"/>
+                           <setting name="DEBUG_CONSOLE_SCANF_MAX_LOG_LEN" value="20"/>
+                           <setting name="DEBUG_CONSOLE_ENABLE_ECHO" value="false"/>
+                           <setting name="PRINTF_FLOAT_ENABLE" value="false"/>
+                           <setting name="SCANF_FLOAT_ENABLE" value="false"/>
+                           <setting name="PRINTF_ADVANCED_ENABLE" value="false"/>
+                           <setting name="SCANF_ADVANCED_ENABLE" value="false"/>
+                           <setting name="DEBUG_CONSOLE_TRANSFER_NON_BLOCKING" value="false"/>
+                           <setting name="DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN" value="512"/>
+                           <setting name="DEBUG_CONSOLE_RECEIVE_BUFFER_LEN" value="1024"/>
+                           <setting name="DEBUG_CONSOLE_TX_RELIABLE_ENABLE" value="true"/>
+                           <setting name="DEBUG_CONSOLE_DISABLE_RTOS_SYNCHRONIZATION" value="false"/>
+                        </struct>
+                        <struct name="peripheral_config">
+                           <setting name="serial_port_type" value="kSerialPort_Uart"/>
+                           <struct name="uart_config">
+                              <setting name="peripheralUART" value="LP_FLEXCOMM4"/>
+                              <setting name="clockSource" value="genericUartClockSource"/>
+                              <setting name="clockSourceFreq" value="ClocksTool_DefaultInit"/>
+                              <setting name="baudRate_Bps" value="115200"/>
+                           </struct>
+                        </struct>
+                        <struct name="debug_console_codegenerator"/>
                      </config_set>
                   </instance>
                </instances>
