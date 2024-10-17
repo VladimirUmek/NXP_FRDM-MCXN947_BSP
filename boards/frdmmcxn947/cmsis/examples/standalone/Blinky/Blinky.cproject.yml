@@ -1,6 +1,12 @@
 project:
   device: :cm33_core0
 
+  generators:
+    options:
+      - generator: MCUXpressoConfig
+        path: ./MCUXpressoConfig
+        name: ConfigTools
+
   packs:
     - pack: ARM::CMSIS@^6.0.0
     - pack: ARM::CMSIS-Compiler@^2.1.0
@@ -9,7 +15,7 @@ project:
     - pack: NXP::MCXN947_DFP@19.0.0
 
   setups:
-    - setup: Options for Layer
+    - setup: Options for Project
       processor:
         fpu: sp
         trustzone: "off"
@@ -26,6 +32,8 @@ project:
     - component: CMSIS:OS Tick:SysTick
     - component: CMSIS:RTOS2:Keil RTX5&Source
 
+    - component: Device:Config Tools:Init
+    - component: Device:Startup
     - component: Device:CMSIS:MCXN947_header
     - component: Device:CMSIS:MCXN947_system
 
@@ -43,9 +51,6 @@ project:
     - component: Device:SDK Utilities:assert_lite
     - component: Device:SDK Utilities:debug_console_lite
     - component: Device:SDK Utilities:str
-
-    - component: Device:Startup
-    - component: Device:Config Tools:Init
   groups:
     - group: App
       files:

@@ -1,17 +1,10 @@
 solution:
   created-for: CMSIS-Toolbox@2.6.0
 
-  generators:
-    options:
-      - generator: MCUXpressoConfig
-        path: ./MCUXpressoConfig
-        name: Board
-
   select-compiler:
     - compiler: AC6
     - compiler: GCC
-  #  - compiler: IAR
-  #  - compiler: CLANG
+    - compiler: IAR
 
   compiler: AC6
 

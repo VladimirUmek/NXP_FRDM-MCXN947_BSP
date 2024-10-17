@@ -9,7 +9,7 @@
          <core name="Cortex-M33 (Core #0)" id="cm33_core0" description=""/>
          <core name="Cortex-M33 (Core #1)" id="cm33_core1" description=""/>
       </cores>
-      <description>Configuration imported from ..\tmp</description>
+      <description>Configuration for FRDM-MCXN947</description>
    </common>
    <preferences>
       <validate_boot_init_only>true</validate_boot_init_only>
@@ -17,9 +17,6 @@
       <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
       <update_include_paths>true</update_include_paths>
       <generate_registers_defines>false</generate_registers_defines>
-      <project_links>
-         <project_link path="..\tmp"/>
-      </project_links>
    </preferences>
    <tools>
       <pins name="Pins" version="16.0" enabled="true" update_project_code="true">
