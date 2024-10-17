@@ -6,7 +6,7 @@ project:
     options:
       - generator: MCUXpressoConfig
         path: ./MCUXpressoConfig
-        name: Board
+        name: ConfigTools
 
   setups:
     - setup: Options for project

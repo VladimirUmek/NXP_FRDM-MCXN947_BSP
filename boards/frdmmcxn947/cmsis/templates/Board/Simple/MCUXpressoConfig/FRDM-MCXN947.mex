@@ -9,7 +9,7 @@
          <core name="Cortex-M33 (Core #0)" id="cm33_core0" description=""/>
          <core name="Cortex-M33 (Core #1)" id="cm33_core1" description=""/>
       </cores>
-      <description></description>
+      <description>Configuration for FRDM-MCXN947</description>
    </common>
    <preferences>
       <validate_boot_init_only>true</validate_boot_init_only>

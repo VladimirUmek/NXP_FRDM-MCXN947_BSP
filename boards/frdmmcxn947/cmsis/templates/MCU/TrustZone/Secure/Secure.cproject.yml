@@ -5,7 +5,7 @@ project:
     options:
       - generator: MCUXpressoConfig
         path: ./MCUXpressoConfig
-        name: Board
+        name: ConfigTools
 
   processor:
     # This project is executed in secure mode.
