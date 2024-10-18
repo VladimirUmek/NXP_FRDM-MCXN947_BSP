@@ -30,11 +30,11 @@ jobs:
           doxygen-version: none
           packchk-version: 1.4.1
           gen-pack-script: ./gen_pack.sh
-          gen-pack-output: ./output
 
       - name: Upload pack
         uses: actions/upload-artifact@v4
         with:
-          name: Generated CMSIS pack
+          name: Generated CMSIS pack (in zip archive)
           path: ./output/*.pack
+          overwrite: true
           retention-days: 3
