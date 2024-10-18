@@ -1,4 +1,4 @@
-name: Build pack
+name: Build CMSIS pack
 on:
   workflow_dispatch:
   pull_request:
