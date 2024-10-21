@@ -1705,7 +1705,6 @@
       </project>
       <attributes/>
     </example>
-
     <example name="Blinky" folder="boards/frdmmcxn947/cmsis/examples/standalone/Blinky" doc="README.md">
       <description>The Blinky example that shows the integration with the MCUXpresso Config Tools.</description>
       <board name="FRDM-MCXN947" vendor="NXP" Dvendor="NXP:11"/>
@@ -1747,6 +1746,9 @@
 
     <template name="Simple Device project" path="/boards/frdmmcxn947/cmsis/templates/Device/Simple" file="Simple.csolution.yml" condition="Template_Device">
       <description>Single-core project without TrustZone using MCUXpresso Config Tools</description>
+    </template>
+    <template name="Device project RAM/ROM" path="/boards/frdmmcxn947/cmsis/templates/Device/Simple2" file="Simple2.csolution.yml" condition="Template_Device">
+      <description>Single-core project with RAM and ROM targets, no TrustZone, MCUXpresso Config Tools</description>
     </template>
     <template name="TrustZone Device project" path="/boards/frdmmcxn947/cmsis/templates/Device/TrustZone" file="TrustZone.csolution.yml" condition="Template_Device">
       <description>Single-core project with TrustZone</description>
