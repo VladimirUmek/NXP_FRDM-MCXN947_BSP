@@ -1706,7 +1706,7 @@
       <attributes/>
     </example>
     <example name="Blinky" folder="boards/frdmmcxn947/cmsis/examples/standalone/Blinky" doc="README.md">
-      <description>The Blinky example that shows the integration with the MCUXpresso Config Tools.</description>
+      <description>Blinky example using MCUXpresso Config Tools.</description>
       <board name="FRDM-MCXN947" vendor="NXP" Dvendor="NXP:11"/>
       <project>
         <environment name="csolution" load="Blinky.csolution.yml"/>
