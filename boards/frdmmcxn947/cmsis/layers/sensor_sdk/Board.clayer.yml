@@ -1,6 +1,6 @@
 layer:
   type: Board
-  description: Board setup for IoT
+  description: Board setup for Arduino shield with I2C and SPI
   for-board: NXP::FRDM-MCXN947
   for-device: NXP::MCXN947VDF:cm33_core0
   processor:

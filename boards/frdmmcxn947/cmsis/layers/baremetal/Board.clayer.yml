@@ -1,6 +1,6 @@
 layer:
   type: Board
-  description: Board setup for bare metal application
+  description: Only Startup configuration, no interfaces
   for-board: NXP::FRDM-MCXN947
   for-device: NXP::MCXN947VDF:cm33_core0
   processor:
