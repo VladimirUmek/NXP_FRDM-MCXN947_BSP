@@ -25,8 +25,8 @@
     </languages>
   </requirements>
   <boards>
-    <board vendor="NXP" name="FRDM-MCXN947">
-      <description>FRDM-MCXN947</description>
+    <board vendor="NXP" name="FRDM-MCXN947" orderForm="https://www.nxp.com/part/FRDM-MCXN947">
+      <description>FRDM Development Board for MCX N94 and N54 MCUs</description>
       <image small="boards/frdmmcxn947/frdmmcxn947.png"/>
       <mountedDevice Dname="MCXN947VDF" Dvendor="NXP:11"/>
       <compatibleDevice Dname="MCXN946VDF" Dvendor="NXP:11"/>
