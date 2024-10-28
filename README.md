@@ -2,13 +2,14 @@
 
 This is the development repository for the **CMSIS additions** to the **NXP FRDM-MCXN947 Board Support Pack (BSP)**.
 
-This BSP uses the generator integration of the **CMSIS-Toolbox to configure NXP devices with MCUXpresso Config Tools**.
+This BSP uses the generator integration of the [**CMSIS-Toolbox to configure NXP devices with MCUXpresso Config Tools**](https://github.com/VladimirUmek/NXP_FRDM-MCXN947_BSP/tree/main/boards/frdmmcxn947/cmsis/doc/ConfigToolsGuide.md).
 
 ## CMSIS additions top-level structure
 
 Directory                   | Description
 :---------------------------|:--------------
 [boards/frdmmcxn947/cmsis](https://github.com/VladimirUmek/NXP_FRDM-MCXN947_BSP/tree/main/boards/frdmmcxn947/cmsis) | Placeholder for the CMSIS additions.
+[boards/frdmmcxn947/cmsis/doc](https://github.com/VladimirUmek/NXP_FRDM-MCXN947_BSP/tree/main/boards/frdmmcxn947/cmsis/doc) | User Guides and Documentation
 [boards/frdmmcxn947/cmsis/driver](https://github.com/VladimirUmek/NXP_FRDM-MCXN947_BSP/tree/main/boards/frdmmcxn947/cmsis/drivers) | [CMSIS-Driver VIO](https://arm-software.github.io/CMSIS_6/latest/Driver/group__vio__interface__gr.html) implementation for FRDM-MCXN947
 [boards/frdmmcxn947/cmsis/examples](https://github.com/VladimirUmek/NXP_FRDM-MCXN947_BSP/tree/main/boards/frdmmcxn947/cmsis/examples/) | Example projects based on the [CMSIS Solution Project Format](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/YML-Input-Format.md) Examples
 [boards/frdmmcxn947/cmsis/layers](https://github.com/VladimirUmek/NXP_FRDM-MCXN947_BSP/tree/main/boards/frdmmcxn947/cmsis/layers) | Board layers for using the board with [CMSIS-Toolbox - Reference Applications](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md).
