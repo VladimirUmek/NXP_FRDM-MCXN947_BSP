@@ -18,6 +18,7 @@ layer:
 #        - CMSIS_ETH
         - CMSIS_VIO
         - ARDUINO_UNO_I2C
+        - ARDUINO_UNO_SPI
         - ARDUINO_UNO_UART
 #        - ARDUINO_UNO_D2
 #        - ARDUINO_UNO_D3
@@ -68,6 +69,7 @@ layer:
   components:
     - component: CMSIS:CORE
     - component: CMSIS Driver:I2C:lpi2c_cmsis
+    - component: CMSIS Driver:SPI:lpspi_cmsis
     - component: CMSIS Driver:USART:lpuart_cmsis
     - component: CMSIS Driver:VIO:Board&FRDM-MCXN947
 
@@ -89,6 +91,8 @@ layer:
       define:
         - LPFLEXCOMM_INIT_NOT_USED_IN_DRIVER: 1
     - component: Device:SDK Drivers:lpi2c_edma
+    - component: Device:SDK Drivers:lpspi
+    - component: Device:SDK Drivers:lpspi_edma
     - component: Device:SDK Drivers:lpuart
       define:
         - LPFLEXCOMM_INIT_NOT_USED_IN_DRIVER: 1

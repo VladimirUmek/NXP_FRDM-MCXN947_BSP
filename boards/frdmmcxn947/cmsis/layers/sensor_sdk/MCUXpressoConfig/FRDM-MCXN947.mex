@@ -302,6 +302,37 @@
                   <pin peripheral="LP_FLEXCOMM2" signal="LPFLEXCOMM_P1" pin_num="P2" pin_signal="PIO4_1/TRIG_IN7/FC2_P1/CT_INP17/EZH_PIO25/PLU_IN1"/>
                </pins>
             </function>
+            <function name="BOARD_InitARDUINO_SPI">
+               <description>Configures pin routing and optionally pin electrical features.</description>
+               <options>
+                  <callFromInitBoot>true</callFromInitBoot>
+                  <coreID>cm33_core0</coreID>
+                  <enableClock>true</enableClock>
+               </options>
+               <dependencies>
+                  <dependency resourceType="Peripheral" resourceId="LP_FLEXCOMM1" description="Peripheral LP_FLEXCOMM1 signals are routed in the Pins Tool, but the peripheral is not initialized in the Peripherals Tool." problem_level="1" source="Pins:BOARD_InitARDUINO_SPI">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitARDUINO_SPI">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.port" description="Pins initialization requires the PORT Driver in the project." problem_level="2" source="Pins:BOARD_InitARDUINO_SPI">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <pins>
+                  <pin peripheral="LP_FLEXCOMM1" signal="LPFLEXCOMM_P0" pin_num="B6" pin_signal="PIO0_24/FC1_P0/CT0_MAT0/ADC0_B16"/>
+                  <pin peripheral="LP_FLEXCOMM1" signal="LPFLEXCOMM_P1" pin_num="A6" pin_signal="PIO0_25/FC1_P1/CT0_MAT1/ADC0_B17"/>
+                  <pin peripheral="LP_FLEXCOMM1" signal="LPFLEXCOMM_P2" pin_num="F10" pin_signal="PIO0_26/FC1_P2/CT0_MAT2/ADC0_B18"/>
+                  <pin peripheral="LP_FLEXCOMM1" signal="LPFLEXCOMM_P3" pin_num="E10" pin_signal="PIO0_27/FC1_P3/CT0_MAT3/ADC0_B19"/>
+               </pins>
+            </function>
          </functions_list>
       </pins>
       <clocks name="Clocks" version="14.0" enabled="true" update_project_code="true">
@@ -521,12 +552,14 @@
                <clock_outputs>
                   <clock_output id="CLK_144M_clock.outFreq" value="144 MHz" locked="false" accuracy=""/>
                   <clock_output id="CLK_48M_clock.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FLEXCOMM1_clock.outFreq" value="50 MHz" locked="false" accuracy=""/>
                   <clock_output id="FLEXCOMM2_clock.outFreq" value="12 MHz" locked="false" accuracy=""/>
                   <clock_output id="FLEXCOMM4_clock.outFreq" value="12 MHz" locked="false" accuracy=""/>
                   <clock_output id="FRO_12M_clock.outFreq" value="12 MHz" locked="false" accuracy=""/>
                   <clock_output id="FRO_HF_clock.outFreq" value="48 MHz" locked="false" accuracy=""/>
                   <clock_output id="MAIN_clock.outFreq" value="150 MHz" locked="false" accuracy=""/>
                   <clock_output id="PLL0_CLK_clock.outFreq" value="150 MHz" locked="false" accuracy=""/>
+                  <clock_output id="PLL_DIV_clock.outFreq" value="150 MHz" locked="false" accuracy=""/>
                   <clock_output id="Slow_clock.outFreq" value="37.5 MHz" locked="false" accuracy=""/>
                   <clock_output id="System_clock.outFreq" value="150 MHz" locked="false" accuracy=""/>
                   <clock_output id="gdet_clock.outFreq" value="48 MHz" locked="false" accuracy=""/>
@@ -536,17 +569,22 @@
                   <setting id="PLL0_Mode" value="Normal" locked="false"/>
                   <setting id="RunPowerMode" value="OD" locked="false"/>
                   <setting id="SCGMode" value="PLL0" locked="false"/>
+                  <setting id="FLEXCOMM1CLKDIV_HALT" value="Enable" locked="false"/>
                   <setting id="FLEXCOMM2CLKDIV_HALT" value="Enable" locked="false"/>
                   <setting id="FLEXCOMM4CLKDIV_HALT" value="Enable" locked="false"/>
+                  <setting id="PLLCLKDIV_HALT" value="Enable" locked="false"/>
                   <setting id="SCG.PLL0M_MULT.scale" value="50" locked="true"/>
                   <setting id="SCG.PLL0SRCSEL.sel" value="SCG.FIRC_48M" locked="false"/>
                   <setting id="SCG.PLL0_NDIV.scale" value="8" locked="true"/>
                   <setting id="SCG.SCSSEL.sel" value="SCG.PLL0_CLK" locked="false"/>
+                  <setting id="SYSCON.FCCLKSEL1.sel" value="SYSCON.PLL_DIV_CLK" locked="false"/>
                   <setting id="SYSCON.FCCLKSEL2.sel" value="SCG.FRO_12M" locked="false"/>
                   <setting id="SYSCON.FCCLKSEL4.sel" value="SCG.FRO_12M" locked="false"/>
+                  <setting id="SYSCON.FLEXCOMM1CLKDIV.scale" value="3" locked="false"/>
                   <setting id="SYSCON.FLEXSPICLKSEL.sel" value="NO_CLOCK" locked="false"/>
                   <setting id="SYSCON.FREQMEREFCLKSEL.sel" value="SYSCON.evtg_out0a" locked="false"/>
                   <setting id="SYSCON.FREQMETARGETCLKSEL.sel" value="SYSCON.evtg_out0a" locked="false"/>
+                  <setting id="SYSCON.PLLCLKDIVSEL.sel" value="SCG.PLL0_CLK" locked="false"/>
                </clock_settings>
                <called_from_default_init>true</called_from_default_init>
             </clock_configuration>

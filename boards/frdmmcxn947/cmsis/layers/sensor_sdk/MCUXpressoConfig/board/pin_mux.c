@@ -33,6 +33,7 @@ void BOARD_InitBootPins(void)
     BOARD_InitDEBUG_UARTPins();
     BOARD_InitARDUINO_UART();
     BOARD_InitARDUINO_I2C();
+    BOARD_InitARDUINO_SPI();
 }
 
 /* clang-format off */
@@ -463,6 +464,72 @@ void BOARD_InitARDUINO_I2C(void)
 
                      /* Input Buffer Enable: Enables. */
                      | PORT_PCR_IBE(PCR_IBE_ibe1));
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitARDUINO_SPI:
+- options: {callFromInitBoot: 'true', coreID: cm33_core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: B6, peripheral: LP_FLEXCOMM1, signal: LPFLEXCOMM_P0, pin_signal: PIO0_24/FC1_P0/CT0_MAT0/ADC0_B16}
+  - {pin_num: A6, peripheral: LP_FLEXCOMM1, signal: LPFLEXCOMM_P1, pin_signal: PIO0_25/FC1_P1/CT0_MAT1/ADC0_B17}
+  - {pin_num: F10, peripheral: LP_FLEXCOMM1, signal: LPFLEXCOMM_P2, pin_signal: PIO0_26/FC1_P2/CT0_MAT2/ADC0_B18}
+  - {pin_num: E10, peripheral: LP_FLEXCOMM1, signal: LPFLEXCOMM_P3, pin_signal: PIO0_27/FC1_P3/CT0_MAT3/ADC0_B19}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitARDUINO_SPI
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitARDUINO_SPI(void)
+{
+    /* Enables the clock for PORT0 controller: Enables clock */
+    CLOCK_EnableClock(kCLOCK_Port0);
+
+    /* PORT0_24 (pin B6) is configured as FC1_P0 */
+    PORT_SetPinMux(PORT0, 24U, kPORT_MuxAlt2);
+
+    PORT0->PCR[24] = ((PORT0->PCR[24] &
+                       /* Mask bits to zero which are setting */
+                       (~(PORT_PCR_IBE_MASK)))
+
+                      /* Input Buffer Enable: Enables. */
+                      | PORT_PCR_IBE(PCR_IBE_ibe1));
+
+    /* PORT0_25 (pin A6) is configured as FC1_P1 */
+    PORT_SetPinMux(PORT0, 25U, kPORT_MuxAlt2);
+
+    PORT0->PCR[25] = ((PORT0->PCR[25] &
+                       /* Mask bits to zero which are setting */
+                       (~(PORT_PCR_IBE_MASK)))
+
+                      /* Input Buffer Enable: Enables. */
+                      | PORT_PCR_IBE(PCR_IBE_ibe1));
+
+    /* PORT0_26 (pin F10) is configured as FC1_P2 */
+    PORT_SetPinMux(PORT0, 26U, kPORT_MuxAlt2);
+
+    PORT0->PCR[26] = ((PORT0->PCR[26] &
+                       /* Mask bits to zero which are setting */
+                       (~(PORT_PCR_IBE_MASK)))
+
+                      /* Input Buffer Enable: Enables. */
+                      | PORT_PCR_IBE(PCR_IBE_ibe1));
+
+    /* PORT0_27 (pin E10) is configured as FC1_P3 */
+    PORT_SetPinMux(BOARD_INITARDUINO_SPI_LED_GREEN_PORT, BOARD_INITARDUINO_SPI_LED_GREEN_PIN, kPORT_MuxAlt2);
+
+    PORT0->PCR[27] = ((PORT0->PCR[27] &
+                       /* Mask bits to zero which are setting */
+                       (~(PORT_PCR_IBE_MASK)))
+
+                      /* Input Buffer Enable: Enables. */
+                      | PORT_PCR_IBE(PCR_IBE_ibe1));
 }
 /***********************************************************************************************************************
  * EOF

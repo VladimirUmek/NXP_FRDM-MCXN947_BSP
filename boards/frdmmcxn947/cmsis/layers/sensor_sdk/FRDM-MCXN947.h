@@ -21,7 +21,7 @@
 
 //TODO: #include "Driver_ETH_MAC.h"
 #include "Driver_I2C.h"
-//TODO: #include "Driver_SPI.h"
+#include "Driver_SPI.h"
 #include "Driver_USART.h"
 
 // FRDM-MCXN947 Arduino connector pin definitions
@@ -44,7 +44,7 @@
 
 // CMSIS Driver instances on Arduino connector
 #define ARDUINO_UNO_I2C     2
-//TODO: #define ARDUINO_UNO_SPI     0
+#define ARDUINO_UNO_SPI     1
 #define ARDUINO_UNO_UART    2
 
 // FRDM-MCXN947 mikroBUS connector pin definitions
@@ -63,7 +63,7 @@
 // CMSIS Drivers
 //TODO: extern ARM_DRIVER_ETH_MAC   ARM_Driver_ETH_MAC_(CMSIS_DRIVER_ETH);  /* Ethernet      */
 extern ARM_DRIVER_I2C       ARM_Driver_I2C_(ARDUINO_UNO_I2C);       /* Arduino I2C   */
-//TODO: extern ARM_DRIVER_SPI       ARM_Driver_SPI_(ARDUINO_UNO_SPI);       /* Arduino SPI   */
+extern ARM_DRIVER_SPI       ARM_Driver_SPI_(ARDUINO_UNO_SPI);       /* Arduino SPI   */
 extern ARM_DRIVER_USART     ARM_Driver_USART_(ARDUINO_UNO_UART);    /* Arduino UART  */
 //TODO: extern ARM_DRIVER_I2C       ARM_Driver_I2C_(MIKROBUS_I2C);          /* mikroBUS I2C  */
 //TODO: extern ARM_DRIVER_SPI       ARM_Driver_SPI_(MIKROBUS_SPI);          /* mikroBUS SPI  */

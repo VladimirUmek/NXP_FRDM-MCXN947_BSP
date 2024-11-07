@@ -162,6 +162,23 @@ void BOARD_InitARDUINO_UART(void);
  */
 void BOARD_InitARDUINO_I2C(void);
 
+#define PCR_IBE_ibe1 0x01u /*!<@brief Input Buffer Enable: Enables */
+
+/*! @name PORT0_27 (coord E10), P0_27/SJ6[1]
+  @{ */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INITARDUINO_SPI_LED_GREEN_PORT PORT0                /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITARDUINO_SPI_LED_GREEN_PIN 27U                   /*!<@brief PORT pin number */
+#define BOARD_INITARDUINO_SPI_LED_GREEN_PIN_MASK (1U << 27U)      /*!<@brief PORT pin mask */
+                                                                  /* @} */
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void BOARD_InitARDUINO_SPI(void);
+
 #if defined(__cplusplus)
 }
 #endif

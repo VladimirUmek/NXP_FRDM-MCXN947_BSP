@@ -37,6 +37,11 @@ __WEAK int32_t shield_setup (void) {
 }
 #endif
 
+// Callbacks for LPSPI1 Driver
+uint32_t LPSPI1_GetFreq   (void) { return BOARD_BOOTCLOCKPLL150M_FLEXCOMM1_CLOCK; }
+void     LPSPI1_InitPins  (void) { /* Done in BOARD_InitARDUINO_SPI function */ }
+void     LPSPI1_DeinitPins(void) { /* Not implemented */ }
+
 // Callbacks for LPUART2 Driver
 uint32_t LPUART2_GetFreq   (void) { return BOARD_BOOTCLOCKPLL150M_FLEXCOMM2_CLOCK; }
 void     LPUART2_InitPins  (void) { /* Done in BOARD_InitARDUINO_UART function */ }
