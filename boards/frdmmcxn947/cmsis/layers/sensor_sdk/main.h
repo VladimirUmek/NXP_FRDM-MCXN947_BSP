@@ -22,7 +22,10 @@
 #include <stdint.h>
 
 /* Prototypes */
-/* Prototypes */
+extern uint32_t LPI2C2_GetFreq     (void);
+extern uint32_t LPSPI1_GetFreq     (void);
+extern void     LPSPI1_InitPins    (void);
+extern void     LPSPI1_DeinitPins  (void);
 extern uint32_t LPUART2_GetFreq    (void);
 extern void     LPUART2_InitPins   (void);
 extern void     LPUART2_DeinitPins (void);

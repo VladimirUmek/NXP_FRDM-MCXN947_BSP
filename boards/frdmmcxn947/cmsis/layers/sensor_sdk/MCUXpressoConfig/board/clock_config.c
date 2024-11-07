@@ -272,12 +272,14 @@ called_from_default_init: true
 outputs:
 - {id: CLK_144M_clock.outFreq, value: 144 MHz}
 - {id: CLK_48M_clock.outFreq, value: 48 MHz}
+- {id: FLEXCOMM1_clock.outFreq, value: 50 MHz}
 - {id: FLEXCOMM2_clock.outFreq, value: 12 MHz}
 - {id: FLEXCOMM4_clock.outFreq, value: 12 MHz}
 - {id: FRO_12M_clock.outFreq, value: 12 MHz}
 - {id: FRO_HF_clock.outFreq, value: 48 MHz}
 - {id: MAIN_clock.outFreq, value: 150 MHz}
 - {id: PLL0_CLK_clock.outFreq, value: 150 MHz}
+- {id: PLL_DIV_clock.outFreq, value: 150 MHz}
 - {id: Slow_clock.outFreq, value: 37.5 MHz}
 - {id: System_clock.outFreq, value: 150 MHz}
 - {id: gdet_clock.outFreq, value: 48 MHz}
@@ -286,17 +288,22 @@ settings:
 - {id: PLL0_Mode, value: Normal}
 - {id: RunPowerMode, value: OD}
 - {id: SCGMode, value: PLL0}
+- {id: FLEXCOMM1CLKDIV_HALT, value: Enable}
 - {id: FLEXCOMM2CLKDIV_HALT, value: Enable}
 - {id: FLEXCOMM4CLKDIV_HALT, value: Enable}
+- {id: PLLCLKDIV_HALT, value: Enable}
 - {id: SCG.PLL0M_MULT.scale, value: '50', locked: true}
 - {id: SCG.PLL0SRCSEL.sel, value: SCG.FIRC_48M}
 - {id: SCG.PLL0_NDIV.scale, value: '8', locked: true}
 - {id: SCG.SCSSEL.sel, value: SCG.PLL0_CLK}
+- {id: SYSCON.FCCLKSEL1.sel, value: SYSCON.PLL_DIV_CLK}
 - {id: SYSCON.FCCLKSEL2.sel, value: SCG.FRO_12M}
 - {id: SYSCON.FCCLKSEL4.sel, value: SCG.FRO_12M}
+- {id: SYSCON.FLEXCOMM1CLKDIV.scale, value: '3'}
 - {id: SYSCON.FLEXSPICLKSEL.sel, value: NO_CLOCK}
 - {id: SYSCON.FREQMEREFCLKSEL.sel, value: SYSCON.evtg_out0a}
 - {id: SYSCON.FREQMETARGETCLKSEL.sel, value: SYSCON.evtg_out0a}
+- {id: SYSCON.PLLCLKDIVSEL.sel, value: SCG.PLL0_CLK}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
@@ -348,11 +355,15 @@ void BOARD_BootClockPLL150M(void)
 
     /*!< Set up clock selectors  */
     CLOCK_AttachClk(kPLL0_to_MAIN_CLK);
+    CLOCK_AttachClk(kPLL0_to_PLLCLKDIV);                 /*!< Switch PLLCLKDIV to PLL0 */
+    CLOCK_AttachClk(kPLL_DIV_to_FLEXCOMM1);                 /*!< Switch FLEXCOMM1 to PLL_DIV */
     CLOCK_AttachClk(kFRO12M_to_FLEXCOMM2);                 /*!< Switch FLEXCOMM2 to FRO12M */
     CLOCK_AttachClk(kFRO12M_to_FLEXCOMM4);                 /*!< Switch FLEXCOMM4 to FRO12M */
 
     /*!< Set up dividers */
     CLOCK_SetClkDiv(kCLOCK_DivAhbClk, 1U);           /*!< Set AHBCLKDIV divider to value 1 */
+    CLOCK_SetClkDiv(kCLOCK_DivPllClk, 1U);           /*!< Set PLLCLKDIV divider to value 1 */
+    CLOCK_SetClkDiv(kCLOCK_DivFlexcom1Clk, 3U);           /*!< Set FLEXCOMM1CLKDIV divider to value 3 */
     CLOCK_SetClkDiv(kCLOCK_DivFlexcom2Clk, 1U);           /*!< Set FLEXCOMM2CLKDIV divider to value 1 */
     CLOCK_SetClkDiv(kCLOCK_DivFlexcom4Clk, 1U);           /*!< Set FLEXCOMM4CLKDIV divider to value 1 */
 

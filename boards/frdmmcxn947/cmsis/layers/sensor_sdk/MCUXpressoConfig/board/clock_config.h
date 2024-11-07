@@ -437,7 +437,7 @@ void BOARD_BootClockFROHF144M(void);
 #define BOARD_BOOTCLOCKPLL150M_FLEXCAN0_CLOCK         0UL            /* Clock consumers of FLEXCAN0_clock output : CAN0 */
 #define BOARD_BOOTCLOCKPLL150M_FLEXCAN1_CLOCK         0UL            /* Clock consumers of FLEXCAN1_clock output : CAN1 */
 #define BOARD_BOOTCLOCKPLL150M_FLEXCOMM0_CLOCK        0UL            /* Clock consumers of FLEXCOMM0_clock output : LPI2C0, LPSPI0, LPUART0, LP_FLEXCOMM0 */
-#define BOARD_BOOTCLOCKPLL150M_FLEXCOMM1_CLOCK        0UL            /* Clock consumers of FLEXCOMM1_clock output : LPI2C1, LPSPI1, LPUART1, LP_FLEXCOMM1 */
+#define BOARD_BOOTCLOCKPLL150M_FLEXCOMM1_CLOCK        50000000UL     /* Clock consumers of FLEXCOMM1_clock output : LPI2C1, LPSPI1, LPUART1, LP_FLEXCOMM1 */
 #define BOARD_BOOTCLOCKPLL150M_FLEXCOMM2_CLOCK        12000000UL     /* Clock consumers of FLEXCOMM2_clock output : LPI2C2, LPSPI2, LPUART2, LP_FLEXCOMM2 */
 #define BOARD_BOOTCLOCKPLL150M_FLEXCOMM3_CLOCK        0UL            /* Clock consumers of FLEXCOMM3_clock output : LPI2C3, LPSPI3, LPUART3, LP_FLEXCOMM3 */
 #define BOARD_BOOTCLOCKPLL150M_FLEXCOMM4_CLOCK        12000000UL     /* Clock consumers of FLEXCOMM4_clock output : LPI2C4, LPSPI4, LPUART4, LP_FLEXCOMM4 */
@@ -465,7 +465,7 @@ void BOARD_BootClockFROHF144M(void);
 #define BOARD_BOOTCLOCKPLL150M_OSTIMER_CLOCK          0UL            /* Clock consumers of OSTIMER_clock output : OSTIMER0 */
 #define BOARD_BOOTCLOCKPLL150M_PLL0_CLK_CLOCK         150000000UL    /* Clock consumers of PLL0_CLK_clock output : N/A */
 #define BOARD_BOOTCLOCKPLL150M_PLL1_CLK_CLOCK         0UL            /* Clock consumers of PLL1_CLK_clock output : N/A */
-#define BOARD_BOOTCLOCKPLL150M_PLL_DIV_CLOCK          0UL            /* Clock consumers of PLL_DIV_clock output : N/A */
+#define BOARD_BOOTCLOCKPLL150M_PLL_DIV_CLOCK          150000000UL    /* Clock consumers of PLL_DIV_clock output : N/A */
 #define BOARD_BOOTCLOCKPLL150M_PLUCLKIN_CLOCK         0UL            /* Clock consumers of PLUCLKIN_clock output : PLU0 */
 #define BOARD_BOOTCLOCKPLL150M_PLU_GLITCH_12MHZ_CLOCK 0UL            /* Clock consumers of PLU_GLITCH_12MHz_clock output : PLU0 */
 #define BOARD_BOOTCLOCKPLL150M_PLU_GLITCH_1MHZ_CLOCK  0UL            /* Clock consumers of PLU_GLITCH_1MHz_clock output : PLU0 */

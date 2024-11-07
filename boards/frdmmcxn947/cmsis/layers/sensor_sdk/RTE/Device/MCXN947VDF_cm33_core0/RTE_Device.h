@@ -149,7 +149,7 @@
  */
 #define RTE_SPI0        0
 #define RTE_SPI0_DMA_EN 0
-#define RTE_SPI1        0
+#define RTE_SPI1        1
 #define RTE_SPI1_DMA_EN 0
 #define RTE_SPI2        0
 #define RTE_SPI2_DMA_EN 0
@@ -174,8 +174,8 @@
 #define RTE_SPI0_DMA_RX_DMA_BASE DMA0
 
 #define RTE_SPI1_SSEL_NUM        kSPI_Ssel0
-#define RTE_SPI1_PIN_INIT        SPI1_InitPins
-#define RTE_SPI1_PIN_DEINIT      SPI1_DeinitPins
+#define RTE_SPI1_PIN_INIT        LPSPI1_InitPins
+#define RTE_SPI1_PIN_DEINIT      LPSPI1_DeinitPins
 #define RTE_SPI1_DMA_TX_CH       3
 #define RTE_SPI1_DMA_TX_DMA_BASE DMA0
 #define RTE_SPI1_DMA_RX_CH       2
