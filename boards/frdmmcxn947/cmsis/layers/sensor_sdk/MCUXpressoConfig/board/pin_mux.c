@@ -31,6 +31,7 @@ external_user_signals: {}
 void BOARD_InitBootPins(void)
 {
     BOARD_InitDEBUG_UARTPins();
+    BOARD_InitARDUINO_UART();
 }
 
 /* clang-format off */
@@ -373,6 +374,50 @@ void BOARD_InitBUTTONsPins(void)
                                    .lockRegister = kPORT_UnlockRegister};
     /* PORT0_6 (pin C14) is configured as PIO0_6 */
     PORT_SetPinConfig(BOARD_INITBUTTONSPINS_SW3_PORT, BOARD_INITBUTTONSPINS_SW3_PIN, &SW3);
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitARDUINO_UART:
+- options: {callFromInitBoot: 'true', coreID: cm33_core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: T1, peripheral: LP_FLEXCOMM2, signal: LPFLEXCOMM_P2, pin_signal: PIO4_2/TRIG_IN6/FC2_P2/CT_INP12/EZH_PIO26/PLU_IN2/SINC0_MBIT3/DAC0_OUT/ADC0_A4/ADC1_A4/CMP0_IN4N/CMP1_IN4N/CMP2_IN4N}
+  - {pin_num: U1, peripheral: LP_FLEXCOMM2, signal: LPFLEXCOMM_P3, pin_signal: PIO4_3/WUU0_IN19/TRIG_IN7/FC2_P3/CT_INP13/EZH_PIO27/PLU_IN3/DAC1_OUT/ADC0_B4/ADC1_B4/CMP0_IN5N/CMP1_IN5N/CMP2_IN5N}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitARDUINO_UART
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitARDUINO_UART(void)
+{
+    /* Enables the clock for PORT4: Enables clock */
+    CLOCK_EnableClock(kCLOCK_Port4);
+
+    /* PORT4_2 (pin T1) is configured as FC2_P2 */
+    PORT_SetPinMux(PORT4, 2U, kPORT_MuxAlt2);
+
+    PORT4->PCR[2] = ((PORT4->PCR[2] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_IBE_MASK)))
+
+                     /* Input Buffer Enable: Enables. */
+                     | PORT_PCR_IBE(PCR_IBE_ibe1));
+
+    /* PORT4_3 (pin U1) is configured as FC2_P3 */
+    PORT_SetPinMux(PORT4, 3U, kPORT_MuxAlt2);
+
+    PORT4->PCR[3] = ((PORT4->PCR[3] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_IBE_MASK)))
+
+                     /* Input Buffer Enable: Enables. */
+                     | PORT_PCR_IBE(PCR_IBE_ibe1));
 }
 /***********************************************************************************************************************
  * EOF
