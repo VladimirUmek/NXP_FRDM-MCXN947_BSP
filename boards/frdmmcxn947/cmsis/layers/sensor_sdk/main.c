@@ -27,6 +27,8 @@
 #include "peripherals.h"
 #include "pin_mux.h"
 
+#include "fsl_lpflexcomm.h"
+
 #include "main.h"
 
 #ifdef CMSIS_shield_header
@@ -35,15 +37,28 @@ __WEAK int32_t shield_setup (void) {
 }
 #endif
 
+// Callbacks for LPUART2 Driver
+uint32_t LPUART2_GetFreq   (void) { return BOARD_BOOTCLOCKPLL150M_FLEXCOMM2_CLOCK; }
+void     LPUART2_InitPins  (void) { /* Done in BOARD_InitARDUINO_UART function */ }
+void     LPUART2_DeinitPins(void) { /* Not implemented */ }
+
 int main (void) {
 
   /* System initialization */
-  BOARD_InitBootPeripherals();
   BOARD_InitBootClocks();
+
+  LP_FLEXCOMM_Init(2U, LP_FLEXCOMM_PERIPH_LPI2CAndLPUART);
+  LP_FLEXCOMM_Init(4U, LP_FLEXCOMM_PERIPH_LPUART);
+
+  BOARD_InitBootPeripherals();
   BOARD_InitBootPins();
 
   NVIC_SetPriority(ETHERNET_IRQn,     8U);
+  NVIC_SetPriority(LP_FLEXCOMM2_IRQn, 8U);
   NVIC_SetPriority(LP_FLEXCOMM4_IRQn, 8U);
+
+  /* Update System Core Clock info */
+  SystemCoreClockUpdate();
 
   /* Initialize Virtual I/O */
   vioInit();

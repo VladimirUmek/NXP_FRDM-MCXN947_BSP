@@ -22,7 +22,12 @@
 #include <stdint.h>
 
 /* Prototypes */
-extern int app_main     (void);
-extern int shield_setup (void);
-extern int stdio_init   (void);
+/* Prototypes */
+extern uint32_t LPUART2_GetFreq    (void);
+extern void     LPUART2_InitPins   (void);
+extern void     LPUART2_DeinitPins (void);
+
+extern int      app_main           (void);
+extern int      shield_setup       (void);
+extern int      stdio_init         (void);
 #endif
