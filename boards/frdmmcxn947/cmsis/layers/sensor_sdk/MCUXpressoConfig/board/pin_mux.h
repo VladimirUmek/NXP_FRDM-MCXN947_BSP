@@ -154,6 +154,14 @@ void BOARD_InitBUTTONsPins(void);
  */
 void BOARD_InitARDUINO_UART(void);
 
+#define PCR_IBE_ibe1 0x01u /*!<@brief Input Buffer Enable: Enables */
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void BOARD_InitARDUINO_I2C(void);
+
 #if defined(__cplusplus)
 }
 #endif

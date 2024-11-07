@@ -273,6 +273,35 @@
                   <pin peripheral="LP_FLEXCOMM2" signal="LPFLEXCOMM_P3" pin_num="U1" pin_signal="PIO4_3/WUU0_IN19/TRIG_IN7/FC2_P3/CT_INP13/EZH_PIO27/PLU_IN3/DAC1_OUT/ADC0_B4/ADC1_B4/CMP0_IN5N/CMP1_IN5N/CMP2_IN5N"/>
                </pins>
             </function>
+            <function name="BOARD_InitARDUINO_I2C">
+               <description>Configures pin routing and optionally pin electrical features.</description>
+               <options>
+                  <callFromInitBoot>true</callFromInitBoot>
+                  <coreID>cm33_core0</coreID>
+                  <enableClock>true</enableClock>
+               </options>
+               <dependencies>
+                  <dependency resourceType="Peripheral" resourceId="LP_FLEXCOMM2" description="Peripheral LP_FLEXCOMM2 signals are routed in the Pins Tool, but the peripheral is not initialized in the Peripherals Tool." problem_level="1" source="Pins:BOARD_InitARDUINO_I2C">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitARDUINO_I2C">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.port" description="Pins initialization requires the PORT Driver in the project." problem_level="2" source="Pins:BOARD_InitARDUINO_I2C">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <pins>
+                  <pin peripheral="LP_FLEXCOMM2" signal="LPFLEXCOMM_P0" pin_num="P1" pin_signal="PIO4_0/WUU0_IN18/TRIG_IN6/FC2_P0/CT_INP16/EZH_PIO24/PLU_IN0/SINC0_MCLK3"/>
+                  <pin peripheral="LP_FLEXCOMM2" signal="LPFLEXCOMM_P1" pin_num="P2" pin_signal="PIO4_1/TRIG_IN7/FC2_P1/CT_INP17/EZH_PIO25/PLU_IN1"/>
+               </pins>
+            </function>
          </functions_list>
       </pins>
       <clocks name="Clocks" version="14.0" enabled="true" update_project_code="true">

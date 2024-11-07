@@ -42,6 +42,9 @@ uint32_t LPUART2_GetFreq   (void) { return BOARD_BOOTCLOCKPLL150M_FLEXCOMM2_CLOC
 void     LPUART2_InitPins  (void) { /* Done in BOARD_InitARDUINO_UART function */ }
 void     LPUART2_DeinitPins(void) { /* Not implemented */ }
 
+// Callbacks for LPI2C2 Driver
+uint32_t LPI2C2_GetFreq    (void) { return BOARD_BOOTCLOCKPLL150M_FLEXCOMM2_CLOCK; }
+
 int main (void) {
 
   /* System initialization */
