@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<configuration name="" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_16 http://mcuxpresso.nxp.com/XSD/mex_configuration_16.xsd" uuid="86fc5f33-8363-4f12-827f-8dbbad2298bc" version="16" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_16" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <common>
+      <processor>MCXN947</processor>
+      <package>MCXN947VDF</package>
+      <mcu_data>ksdk2_0</mcu_data>
+      <cores selected="cm33_core1">
+         <core name="Cortex-M33 (Core #0)" id="cm33_core0" description=""/>
+         <core name="Cortex-M33 (Core #1)" id="cm33_core1" description=""/>
+      </cores>
+      <description>Configuration for MCXN947VDF</description>
+   </common>
+   <preferences>
+      <validate_boot_init_only>true</validate_boot_init_only>
+      <generate_extended_information>false</generate_extended_information>
+      <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
+      <update_include_paths>true</update_include_paths>
+      <generate_registers_defines>false</generate_registers_defines>
+   </preferences>
+   <tools>
+      <pins name="Pins" version="16.0" enabled="true" update_project_code="true">
+         <generated_project_files>
+            <file path="../cm33_core1/MCUXpressoConfig/board/pin_mux.c" update_enabled="true"/>
+            <file path="../cm33_core1/MCUXpressoConfig/board/pin_mux.h" update_enabled="true"/>
+         </generated_project_files>
+         <pins_profile>
+            <processor_version>16.3.0</processor_version>
+         </pins_profile>
+         <functions_list>
+            <function name="BOARD_InitPins">
+               <description></description>
+               <options>
+                  <callFromInitBoot>true</callFromInitBoot>
+                  <coreID>cm33_core1</coreID>
+                  <enableClock>true</enableClock>
+               </options>
+               <dependencies>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core1">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <pins/>
+            </function>
+         </functions_list>
+      </pins>
+      <clocks name="Clocks" version="14.0" enabled="true" update_project_code="true">
+         <generated_project_files>
+            <file path="../cm33_core1/MCUXpressoConfig/board/clock_config.c" update_enabled="true"/>
+            <file path="../cm33_core1/MCUXpressoConfig/board/clock_config.h" update_enabled="true"/>
+         </generated_project_files>
+         <clocks_profile>
+            <processor_version>16.3.0</processor_version>
+         </clocks_profile>
+         <clock_configurations>
+            <clock_configuration name="BOARD_BootClockRUN" id_prefix="" prefix_user_defined="false">
+               <description></description>
+               <options/>
+               <dependencies>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core1">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.clock" description="Clocks initialization requires the CLOCK Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core1">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.clock" description="Clocks initialization requires the CLOCK Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.mcx_spc" description="Clocks initialization requires the MCX_SPC Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core1">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.mcx_spc" description="Clocks initialization requires the MCX_SPC Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <clock_sources/>
+               <clock_outputs>
+                  <clock_output id="CLK_144M_clock.outFreq" value="144 MHz" locked="false" accuracy=""/>
+                  <clock_output id="CLK_48M_clock.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FREQME_reference_clock.outFreq" value="144 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FREQME_target_clock.outFreq" value="144 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FRO_12M_clock.outFreq" value="12 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FRO_HF_clock.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="MAIN_clock.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="Slow_clock.outFreq" value="12 MHz" locked="false" accuracy=""/>
+                  <clock_output id="System_clock.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="gdet_clock.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="trng_clock.outFreq" value="48 MHz" locked="false" accuracy=""/>
+               </clock_outputs>
+               <clock_settings/>
+               <called_from_default_init>true</called_from_default_init>
+            </clock_configuration>
+         </clock_configurations>
+      </clocks>
+      <dcdx name="DCDx" version="3.0" enabled="false" update_project_code="true">
+         <generated_project_files/>
+         <dcdx_profile>
+            <processor_version>N/A</processor_version>
+         </dcdx_profile>
+         <dcdx_configurations/>
+      </dcdx>
+      <periphs name="Peripherals" version="15.0" enabled="true" update_project_code="true">
+         <generated_project_files>
+            <file path="../cm33_core1/MCUXpressoConfig/board/peripherals.c" update_enabled="true"/>
+            <file path="../cm33_core1/MCUXpressoConfig/board/peripherals.h" update_enabled="true"/>
+         </generated_project_files>
+         <peripherals_profile>
+            <processor_version>16.3.0</processor_version>
+         </peripherals_profile>
+         <functional_groups>
+            <functional_group name="BOARD_InitPeripherals" uuid="16e03b41-5cc7-474f-84b0-f9f471e060a4" called_from_default_init="true" id_prefix="" core="cm33_core1">
+               <description></description>
+               <options/>
+               <dependencies/>
+               <instances>
+                  <instance name="NVIC" uuid="caebece7-ab48-4a31-aa55-20d06f412dde" type="nvic" type_id="nvic" mode="general" peripheral="NVIC" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="nvic">
+                        <array name="interrupt_table"/>
+                        <array name="interrupts"/>
+                     </config_set>
+                  </instance>
+               </instances>
+            </functional_group>
+         </functional_groups>
+         <components>
+            <component name="system" uuid="eaf42e27-9004-46d3-9d80-a498028810b6" type_id="system">
+               <config_set_global name="global_system_definitions">
+                  <setting name="user_definitions" value=""/>
+                  <setting name="user_includes" value=""/>
+                  <setting name="global_init" value=""/>
+               </config_set_global>
+            </component>
+            <component name="uart_cmsis_common" uuid="692d28ee-358c-45df-9f2a-e8fb9dadd9f4" type_id="uart_cmsis_common">
+               <config_set_global name="global_USART_CMSIS_common" quick_selection="default"/>
+            </component>
+            <component name="msg" uuid="ef6646e6-4811-4690-b35f-dfe24d5fc48a" type_id="msg">
+               <config_set_global name="global_messages"/>
+            </component>
+            <component name="gpio_adapter_common" uuid="f84ca10c-e50f-4e03-8ca2-bede178ef4e8" type_id="gpio_adapter_common">
+               <config_set_global name="global_gpio_adapter_common" quick_selection="default"/>
+            </component>
+            <component name="generic_uart" uuid="3b403260-09c5-4c99-a8f7-00ee1b56de6d" type_id="generic_uart">
+               <config_set_global name="global_uart"/>
+            </component>
+            <component name="generic_enet" uuid="4005cc31-7931-4dfd-aa5e-3d82e385c8c1" type_id="generic_enet">
+               <config_set_global name="global_enet"/>
+            </component>
+            <component name="generic_can" uuid="824e9e8a-89ec-4433-8564-80a205d4210a" type_id="generic_can">
+               <config_set_global name="global_can"/>
+            </component>
+         </components>
+      </periphs>
+      <tee name="TEE" version="7.0" enabled="false" update_project_code="true">
+         <generated_project_files/>
+         <tee_profile>
+            <processor_version>N/A</processor_version>
+         </tee_profile>
+      </tee>
+   </tools>
+</configuration>
