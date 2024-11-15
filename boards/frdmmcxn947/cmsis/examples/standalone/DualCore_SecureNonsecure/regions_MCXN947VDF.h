@@ -7,98 +7,112 @@
 // <i> Device Family Pack (DFP):   NXP::MCXN947_DFP@19.0.0
 // <i> Board Support Pack (BSP):   NXP::FRDM-MCXN947_BSP@19.1.0-dev19
 
-#ifdef CPU_MCXN947VDF_cm33_core0
-// <h> ROM Configuration
-// =======================
-// <h> __ROM0 (is rx memory: PROGRAM_FLASH0+PROGRAM_FLASH1 from DFP)
-//   <o> Base address <0x0-0xFFFFFFFF:8>
+// <h> Core 0 Memory Configuration
+// ===============================
+// <h> Secure State
+// ================
+//   <o> ROM Base Address <0x0-0xFFFFFFFF:8>
 //   <i> Defines base address of memory region. Default: 0x00000000
 //   <i> Contains Startup and Vector Table
-#define __ROM0_BASE 0x00000000
-//   <o> Region size [bytes] <0x0-0xFFFFFFFF:8>
+#define CORE0_S_ROM_BASE    0x10000000
+//   <o> ROM Region Size [bytes] <0x0-0xFFFFFFFF:8>
 //   <i> Defines size of memory region. Default: 0x00200000
-#define __ROM0_SIZE 0x00100000
-// </h>
+#define CORE0_S_ROM_SIZE    0x00020000
 
-// </h>
-
-// <h> RAM Configuration
-// =======================
-// <h> __RAM0 (is rw memory: SRAM+SRAMH from DFP)
-//   <o> Base address <0x0-0xFFFFFFFF:8>
+//   <o> RAM Base Address <0x0-0xFFFFFFFF:8>
 //   <i> Defines base address of memory region. Default: 0x20000000
 //   <i> Contains uninitialized RAM, Stack, and Heap
-#define __RAM0_BASE 0x20000000
-//   <o> Region size [bytes] <0x0-0xFFFFFFFF:8>
+#define CORE0_S_RAM_BASE    0x30000000
+//   <o> RAM Region Size [bytes] <0x0-0xFFFFFFFF:8>
 //   <i> Defines size of memory region. Default: 0x00068000
-#define __RAM0_SIZE 0x00030000
+#define CORE0_S_RAM_SIZE    0x00008000
+
+//   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
+#define CORE0_S_STACK_SIZE  0x00000400
+
+//   <o> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+#define CORE0_S_HEAP_SIZE   0x00000400
 // </h>
 
+// <h> Non-secure State
+// ====================
+//   <o> ROM Base Address <0x0-0xFFFFFFFF:8>
+//   <i> Defines base address of memory region. Default: 0x00000000
+//   <i> Contains Startup and Vector Table
+#define CORE0_NS_ROM_BASE   0x00020000
+//   <o> ROM Region Size [bytes] <0x0-0xFFFFFFFF:8>
+//   <i> Defines size of memory region. Default: 0x00200000
+#define CORE0_NS_ROM_SIZE   0x000A0000
+
+//   <o> RAM Base Address <0x0-0xFFFFFFFF:8>
+//   <i> Defines base address of memory region. Default: 0x20000000
+//   <i> Contains uninitialized RAM, Stack, and Heap
+#define CORE0_NS_RAM_BASE   0x20008000
+//   <o> RAM Region Size [bytes] <0x0-0xFFFFFFFF:8>
+//   <i> Defines size of memory region. Default: 0x00068000
+#define CORE0_NS_RAM_SIZE   0x00046000
+
+//   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
+#define CORE0_NS_STACK_SIZE 0x00000400
+
+//   <o> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+#define CORE0_NS_HEAP_SIZE  0x00010000
+// </h>
 // </h>
 
-// <h> Stack / Heap Configuration
-//   <o0> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
-//   <o1> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
-#define __STACK_SIZE 0x00000400
-#define __HEAP_SIZE 0x00010000
+// <h> Core 1 Memory Configuration
+// ===============================
+//   <o> ROM Base Address <0x0-0xFFFFFFFF:8>
+//   <i> Defines base address of memory region. Default: 0x00000000
+//   <i> Contains Startup and Vector Table
+#define CORE1_ROM_BASE      0x000C0000
+//   <o> ROM Region Size [bytes] <0x0-0xFFFFFFFF:8>
+//   <i> Defines size of memory region. Default: 0x00200000
+#define CORE1_ROM_SIZE      0x00040000
+
+//   <o> RAM Base Address <0x0-0xFFFFFFFF:8>
+//   <i> Defines base address of memory region. Default: 0x20000000
+//   <i> Contains uninitialized RAM, Stack, and Heap
+#define CORE1_RAM_BASE      0x2004E000
+//   <o> RAM Region Size [bytes] <0x0-0xFFFFFFFF:8>
+//   <i> Defines size of memory region. Default: 0x00068000
+#define CORE1_RAM_SIZE      0x0001A000
+
+//   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
+#define CORE1_STACK_SIZE    0x00000400
+
+//   <o> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+#define CORE1_HEAP_SIZE     0x00000400
 // </h>
 
-// <n> Resources that are not allocated to linker regions
-// <i> rx ROM:   BootROM from DFP:               BASE: 0x03000000  SIZE: 0x040000
-// <i> rx ROM:   BootROM_alias from DFP:         BASE: 0x13000000  SIZE: 0x040000
-// <i> rx ROM:   PROGRAM_FLASH_alias0 from DFP:  BASE: 0x10000000  SIZE: 0x100000
-// <i> rx ROM:   PROGRAM_FLASH_alias1 from DFP:  BASE: 0x10100000  SIZE: 0x100000
-// <i> rw RAM:   SRAMH_alias from DFP:           BASE: 0x30060000  SIZE: 0x8000
-// <i> rw RAM:   SRAMX_alias from DFP:           BASE: 0x14000000  SIZE: 0x018000
-// <i> rw RAM:   SRAM_alias from DFP:            BASE: 0x30000000  SIZE: 0x060000
-// <i> rw RAM:   USB_RAM_alias from DFP:         BASE: 0x500ba000  SIZE: 0x1000
+//-------- End of configuration section --------
+
+// Map defines to match linker script expectations
+#ifdef CPU_MCXN947VDF_cm33_core0
+#if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+#define __ROM0_BASE     CORE0_S_ROM_BASE
+#define __ROM0_SIZE     CORE0_S_ROM_SIZE
+#define __RAM0_BASE     CORE0_S_RAM_BASE
+#define __RAM0_SIZE     CORE0_S_RAM_SIZE
+#define __STACK_SIZE    CORE0_S_STACK_SIZE
+#define __HEAP_SIZE     CORE0_S_HEAP_SIZE
+#else
+#define __ROM0_BASE     CORE0_NS_ROM_BASE
+#define __ROM0_SIZE     CORE0_NS_ROM_SIZE
+#define __RAM0_BASE     CORE0_NS_RAM_BASE
+#define __RAM0_SIZE     CORE0_NS_RAM_SIZE
+#define __STACK_SIZE    CORE0_NS_STACK_SIZE
+#define __HEAP_SIZE     CORE0_NS_HEAP_SIZE
+#endif
 #endif
 
 #ifdef CPU_MCXN947VDF_cm33_core1
-// <h> ROM Configuration
-// =======================
-// <h> __ROM0 (is rx memory: PROGRAM_FLASH0+PROGRAM_FLASH1 from DFP)
-//   <o> Base address <0x0-0xFFFFFFFF:8>
-//   <i> Defines base address of memory region. Default: 0x00000000
-//   <i> Contains Startup and Vector Table
-#define __ROM0_BASE 0x00100000
-//   <o> Region size [bytes] <0x0-0xFFFFFFFF:8>
-//   <i> Defines size of memory region. Default: 0x00200000
-#define __ROM0_SIZE 0x00100000
-// </h>
-
-// </h>
-
-// <h> RAM Configuration
-// =======================
-// <h> __RAM0 (is rw memory: SRAM+SRAMH from DFP)
-//   <o> Base address <0x0-0xFFFFFFFF:8>
-//   <i> Defines base address of memory region. Default: 0x20000000
-//   <i> Contains uninitialized RAM, Stack, and Heap
-#define __RAM0_BASE 0x20030000
-//   <o> Region size [bytes] <0x0-0xFFFFFFFF:8>
-//   <i> Defines size of memory region. Default: 0x00068000
-#define __RAM0_SIZE 0x00020000
-// </h>
-
-// </h>
-
-// <h> Stack / Heap Configuration
-//   <o0> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
-//   <o1> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
-#define __STACK_SIZE 0x00000200
-#define __HEAP_SIZE 0x00000C00
-// </h>
-
-// <n> Resources that are not allocated to linker regions
-// <i> rx ROM:   BootROM from DFP:               BASE: 0x03000000  SIZE: 0x040000
-// <i> rx ROM:   BootROM_alias from DFP:         BASE: 0x13000000  SIZE: 0x040000
-// <i> rx ROM:   PROGRAM_FLASH_alias0 from DFP:  BASE: 0x10000000  SIZE: 0x100000
-// <i> rx ROM:   PROGRAM_FLASH_alias1 from DFP:  BASE: 0x10100000  SIZE: 0x100000
-// <i> rw RAM:   SRAMH_alias from DFP:           BASE: 0x30060000  SIZE: 0x8000
-// <i> rw RAM:   SRAMX_alias from DFP:           BASE: 0x14000000  SIZE: 0x018000
-// <i> rw RAM:   SRAM_alias from DFP:            BASE: 0x30000000  SIZE: 0x060000
-// <i> rw RAM:   USB_RAM_alias from DFP:         BASE: 0x500ba000  SIZE: 0x1000
+#define __ROM0_BASE     CORE0_ROM_BASE
+#define __ROM0_SIZE     CORE0_ROM_SIZE
+#define __RAM0_BASE     CORE0_RAM_BASE
+#define __RAM0_SIZE     CORE0_RAM_SIZE
+#define __STACK_SIZE    CORE0_STACK_SIZE
+#define __HEAP_SIZE     CORE0_HEAP_SIZE
 #endif
 
 #endif /* REGIONS_MCXN947VDF_H */
