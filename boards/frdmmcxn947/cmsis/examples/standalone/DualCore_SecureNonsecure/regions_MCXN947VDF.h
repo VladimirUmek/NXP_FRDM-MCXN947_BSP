@@ -107,12 +107,12 @@
 #endif
 
 #ifdef CPU_MCXN947VDF_cm33_core1
-#define __ROM0_BASE     CORE0_ROM_BASE
-#define __ROM0_SIZE     CORE0_ROM_SIZE
-#define __RAM0_BASE     CORE0_RAM_BASE
-#define __RAM0_SIZE     CORE0_RAM_SIZE
-#define __STACK_SIZE    CORE0_STACK_SIZE
-#define __HEAP_SIZE     CORE0_HEAP_SIZE
+#define __ROM0_BASE     CORE1_ROM_BASE
+#define __ROM0_SIZE     CORE1_ROM_SIZE
+#define __RAM0_BASE     CORE1_RAM_BASE
+#define __RAM0_SIZE     CORE1_RAM_SIZE
+#define __STACK_SIZE    CORE1_STACK_SIZE
+#define __HEAP_SIZE     CORE1_HEAP_SIZE
 #endif
 
 #endif /* REGIONS_MCXN947VDF_H */
