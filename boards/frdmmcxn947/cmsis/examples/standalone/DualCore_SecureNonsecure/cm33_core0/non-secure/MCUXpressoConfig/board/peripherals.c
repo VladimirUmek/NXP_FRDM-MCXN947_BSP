@@ -11,9 +11,10 @@ processor: MCXN947
 package_id: MCXN947VDF
 mcu_data: ksdk2_0
 processor_version: 16.3.0
+board: FRDM-MCXN947
 functionalGroups:
 - name: BOARD_InitPeripherals
-  UUID: 58c73e09-da21-4323-abe3-507e4e4d1a4e
+  UUID: 5e271651-63a3-4c90-a121-a23da3522d5c
   called_from_default_init: true
   selectedCore: cm33_core0
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
@@ -21,7 +22,7 @@ functionalGroups:
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 component:
 - type: 'system'
-- type_id: 'system'
+- type_id: 'system_54b53072540eeeb8f8e9343e71f28176'
 - global_system_definitions:
   - user_definitions: ''
   - user_includes: ''
@@ -31,7 +32,7 @@ component:
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 component:
 - type: 'uart_cmsis_common'
-- type_id: 'uart_cmsis_common'
+- type_id: 'uart_cmsis_common_9cb8e302497aa696fdbb5a4fd622c2a8'
 - global_USART_CMSIS_common:
   - quick_selection: 'default'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
@@ -39,7 +40,7 @@ component:
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 component:
 - type: 'gpio_adapter_common'
-- type_id: 'gpio_adapter_common'
+- type_id: 'gpio_adapter_common_57579b9ac814fe26bf95df0a384c36b6'
 - global_gpio_adapter_common:
   - quick_selection: 'default'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/

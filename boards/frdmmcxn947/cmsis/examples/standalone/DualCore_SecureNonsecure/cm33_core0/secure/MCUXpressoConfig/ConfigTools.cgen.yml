@@ -1,5 +1,5 @@
 generator-import:
-  generated-by: 'MCUXpresso config tools Generated: 12/11/2024 10:30:57'
+  generated-by: 'MCUXpresso config tools Generated: 15/11/2024 14:40:55'
   for-device: MCXN947
   groups:
   - group: ConfigTools board
@@ -10,3 +10,5 @@ generator-import:
     - file: board/peripherals.h
     - file: board/pin_mux.c
     - file: board/pin_mux.h
+    - file: trustzone/resource_config.c
+    - file: trustzone/resource_config.h

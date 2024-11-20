@@ -6,7 +6,3 @@ generator-import:
     files:
     - file: board/clock_config.c
     - file: board/clock_config.h
-    - file: board/peripherals.c
-    - file: board/peripherals.h
-    - file: board/pin_mux.c
-    - file: board/pin_mux.h
