@@ -17,7 +17,6 @@
  *---------------------------------------------------------------------------*/
 
 #include <stdint.h>
-#include <stdio.h>
 #include <arm_cmse.h>
 
 #include "RTE_Components.h"
@@ -52,8 +51,6 @@ int app_main (void) {
 
   /* Set address of the non-secure Reset Handler */
   ResetHandler_NS = (NS_Func_t)(*((uint32_t *)(NS_APP_START_ADDRESS + 4U)));
-
-  printf("Jump to non-secure application at 0x%08X\n", (uint32_t)ResetHandler_NS);
 
   /* Call non-secure Reset Handler and start executing non-secure application */
   ResetHandler_NS();

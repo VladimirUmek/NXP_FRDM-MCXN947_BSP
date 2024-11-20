@@ -19,10 +19,31 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#include "secure_lib.h"
+
+/* Non-secure variables */
+int32_t x;
+int32_t y;
+
+/* Function to be called from the secure state */
+static void Callback_NS (int32_t x_inc) {
+  y = x_inc;
+}
+
 /* Application main function */
 int app_main (void) {
 
-  printf("Non-secure application...\n");
+  printf("Hello from non-secure application!\n\n");
+
+  x = 0;
+  y = 0;
+
+  /* Call secure function */
+  printf("Calling secure function (x=%d)\n", x);
+  if (Func_NSC(x, Callback_NS) != 1) {
+    /* Callback was already called from the secure state */
+    printf("Received callback from the secure function (y=%d)\n", y);
+  }
 
   for(;;);
 }

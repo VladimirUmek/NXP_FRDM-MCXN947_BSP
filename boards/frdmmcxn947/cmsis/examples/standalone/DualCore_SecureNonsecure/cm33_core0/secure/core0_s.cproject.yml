@@ -29,8 +29,8 @@ project:
 
     - group: CMSE Library
       files:
-        - file: ./cmse_lib.c
-        - file: ./cmse_lib.h
+        - file: ./secure_lib.c
+        - file: ./secure_lib.h
 
     - group: Board
       files:

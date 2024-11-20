@@ -1,8 +1,13 @@
 generator-import:
-  generated-by: 'MCUXpresso config tools Generated: 12/11/2024 10:32:51'
+  generated-by: 'MCUXpresso config tools Generated: 20/11/2024 12:46:39'
   for-device: MCXN947
+  for-board: FRDM-MCXN947
   groups:
   - group: ConfigTools board
     files:
     - file: board/clock_config.c
     - file: board/clock_config.h
+    - file: board/peripherals.c
+    - file: board/peripherals.h
+    - file: board/pin_mux.c
+    - file: board/pin_mux.h

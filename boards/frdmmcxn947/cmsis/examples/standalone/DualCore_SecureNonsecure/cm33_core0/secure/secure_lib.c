@@ -17,7 +17,7 @@
  *---------------------------------------------------------------------------*/
 
 #include <arm_cmse.h>     // CMSE definitions
-#include "cmse_lib.h"     // Header file with secure interface API
+#include "secure_lib.h"   // Header file with secure interface API
 
 #define NON_SECURE_CALLABLE_FUNC  __attribute__((cmse_nonsecure_entry))
 

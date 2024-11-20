@@ -22,6 +22,9 @@ project:
 
     - component: CMSIS:CORE
 
+  add-path:
+    - ../secure
+
   groups:
     - group: App
       files:

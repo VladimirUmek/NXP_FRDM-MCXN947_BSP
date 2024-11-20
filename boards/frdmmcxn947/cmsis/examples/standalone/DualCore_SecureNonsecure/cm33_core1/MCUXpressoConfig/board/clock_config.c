@@ -46,7 +46,6 @@ extern uint32_t SystemCoreClock;
  ******************************************************************************/
 void BOARD_InitBootClocks(void)
 {
-    BOARD_BootClockPLL150M();
 }
 
 /*******************************************************************************
@@ -268,7 +267,6 @@ void BOARD_BootClockFROHF144M(void)
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!Configuration
 name: BOARD_BootClockPLL150M
-called_from_default_init: true
 outputs:
 - {id: CLK_144M_clock.outFreq, value: 144 MHz}
 - {id: CLK_48M_clock.outFreq, value: 48 MHz}
