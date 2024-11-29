@@ -115,8 +115,6 @@
     </condition>
     <condition id="CMSIS_Driver_VIO">
       <require condition="board.frdmmcxn947.internal_condition"/>
-      <require Cclass="Device" Cgroup="Config Tools" Csub="Init"/>
-      <require Cclass="Device" Cgroup="SDK Drivers" Csub="clock"/>
       <require Cclass="Device" Cgroup="SDK Drivers" Csub="gpio"/>
     </condition>
     <condition id="Board_Layer">

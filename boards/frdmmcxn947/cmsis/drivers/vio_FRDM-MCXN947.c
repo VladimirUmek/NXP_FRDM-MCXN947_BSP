@@ -40,9 +40,7 @@ vioLED2           | vioSignalOut.2 | RGB LED Blue                               
 #include CMSIS_device_header
 
 #if !defined CMSIS_VOUT || !defined CMSIS_VIN
-#include "pin_mux.h"
 #include "fsl_gpio.h"
-#include "fsl_clock.h"
 #endif
 
 // VIO input, output definitions
@@ -82,12 +80,6 @@ __USED int32_t  vioValue[VIO_VALUE_NUM];    // Memory for value used in vioGetVa
 
 // Initialize test input, output.
 void vioInit (void) {
-#if !defined(CMSIS_VOUT) || !defined(CMSIS_VIN)
-  /* Enable the clock for GPIO0 */
-  CLOCK_EnableClock(kCLOCK_Gpio0);
-  /* Enable the clock for GPIO1 */
-  CLOCK_EnableClock(kCLOCK_Gpio1);
-#endif
 
   vioSignalIn  = 0U;
   vioSignalOut = 0U;
@@ -95,26 +87,15 @@ void vioInit (void) {
   memset(vioValue, 0, sizeof(vioValue));
 
 #if !defined CMSIS_VOUT
-  // Initialize LEDs pins
-  //BOARD_InitLEDsPins();
-
   // Turn off all LEDs
   LED_INIT(LED_0_GPIO, LED_0_PIN, LED_INIT_OFF);
   LED_INIT(LED_1_GPIO, LED_1_PIN, LED_INIT_OFF);
   LED_INIT(LED_2_GPIO, LED_2_PIN, LED_INIT_OFF);
 #endif
-
-#if !defined CMSIS_VIN
-  // Initialize buttons pins
-  //BOARD_InitBUTTONsPins();
-#endif
 }
 
 // Set signal output.
 void vioSetSignal (uint32_t mask, uint32_t signal) {
-#if !defined CMSIS_VOUT
-
-#endif
 
   vioSignalOut &= ~mask;
   vioSignalOut |=  mask & signal;
@@ -150,9 +131,6 @@ void vioSetSignal (uint32_t mask, uint32_t signal) {
 // Get signal input.
 uint32_t vioGetSignal (uint32_t mask) {
   uint32_t signal;
-#if !defined CMSIS_VIN
-
-#endif
 
 #if !defined CMSIS_VIN
   // Get input signals from buttons and joystick
