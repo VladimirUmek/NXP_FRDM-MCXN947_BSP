@@ -21,7 +21,13 @@
 
 #include "main.h"
 
+#ifndef CORE1_SYSTEM_CORE_CLOCK
+#define CORE1_SYSTEM_CORE_CLOCK     150000000
+#endif
+
 int main (void) {
+
+  SystemCoreClock = CORE1_SYSTEM_CORE_CLOCK;
 
   return (app_main());
 }

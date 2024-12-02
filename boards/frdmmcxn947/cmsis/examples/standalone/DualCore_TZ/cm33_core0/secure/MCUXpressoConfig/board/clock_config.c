@@ -277,6 +277,7 @@ outputs:
 - {id: FRO_HF_clock.outFreq, value: 48 MHz}
 - {id: MAIN_clock.outFreq, value: 150 MHz}
 - {id: PLL0_CLK_clock.outFreq, value: 150 MHz}
+- {id: SYSTICK1_clock.outFreq, value: 25 MHz}
 - {id: Slow_clock.outFreq, value: 37.5 MHz}
 - {id: System_clock.outFreq, value: 150 MHz}
 - {id: gdet_clock.outFreq, value: 48 MHz}
@@ -294,6 +295,9 @@ settings:
 - {id: SYSCON.FLEXSPICLKSEL.sel, value: NO_CLOCK}
 - {id: SYSCON.FREQMEREFCLKSEL.sel, value: SYSCON.evtg_out0a}
 - {id: SYSCON.FREQMETARGETCLKSEL.sel, value: SYSCON.evtg_out0a}
+- {id: SYSCON.SYSTICKCLKDIV1.scale, value: '6'}
+- {id: SYSCON.SYSTICKCLKSEL1.sel, value: SYSCON.SYSTICKCLKDIV1}
+- {id: SYSTICKCLKDIV1_HALT, value: Enable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
@@ -345,9 +349,11 @@ void BOARD_BootClockPLL150M(void)
 
     /*!< Set up clock selectors  */
     CLOCK_AttachClk(kPLL0_to_MAIN_CLK);
+    CLOCK_AttachClk(kSYSTICK_DIV1_to_SYSTICK1);                 /*!< Switch SYSTICK1 to SYSTICK_DIV1 */
     CLOCK_AttachClk(kFRO12M_to_FLEXCOMM4);                 /*!< Switch FLEXCOMM4 to FRO12M */
 
     /*!< Set up dividers */
+    CLOCK_SetClkDiv(kCLOCK_DivSystickClk1, 6U);           /*!< Set SYSTICKCLKDIV1 divider to value 6 */
     CLOCK_SetClkDiv(kCLOCK_DivAhbClk, 1U);           /*!< Set AHBCLKDIV divider to value 1 */
     CLOCK_SetClkDiv(kCLOCK_DivFlexcom4Clk, 1U);           /*!< Set FLEXCOMM4CLKDIV divider to value 1 */
 

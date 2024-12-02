@@ -25,26 +25,53 @@
 
 /* Start address of the non-secure application */
 #ifndef NS_APP_START_ADDRESS
-#define NS_APP_START_ADDRESS (0x00020000)
+#define NS_APP_START_ADDRESS  (0x00020000)
 #endif
+
+/* Start address of the core1 application */
+#ifndef CORE1_BOOT_ADDRESS
+#define CORE1_BOOT_ADDRESS    (0x000C0000)
+#endif
+
+void core1_enable (uint32_t boot_address);
 
 /* Define a pointer to a function that will be executed in non-secure state */
 typedef void (*NS_Func_t) (void) __attribute__((cmse_nonsecure_call));
 
 /*
+  Boots secondary core.
+
+  This function sets the secondary core boot address, enables clock to the core
+  and releases secondary core from reset.
+*/
+void core1_enable (uint32_t boot_address) {
+  uint32_t cpuctrl;
+
+  /* Set CPU1 boot source */
+  SYSCON->CPBOOT = (boot_address & SYSCON_CPBOOT_CPBOOT_MASK);
+
+  /* Read out CPU Control register */
+  cpuctrl = SYSCON->CPUCTRL;
+  /* Set Write Protect mask, enable CPU1 clock but keep it under reset */
+  cpuctrl |= (0xC0C4 << 16) | SYSCON_CPUCTRL_CPU1RSTEN_MASK | SYSCON_CPUCTRL_CPU1CLKEN_MASK;
+  SYSCON->CPUCTRL = cpuctrl;
+
+  /* Release CPU1 from reset */
+  SYSCON->CPUCTRL = cpuctrl & ~SYSCON_CPUCTRL_CPU1RSTEN_MASK;
+}
+
+/*
+  Switch to the non-secure state.
+
   Fist entry in the non-secure vector table is the Main Stack Pointer:
   *((uint32_t *)(NS_APP_START_ADDRESS)) == MSP_NS
 
   Second entry in the non-secure vector table is the Reset Handler:
   *((uint32_t *)(NS_APP_START_ADDRESS + 4U)) == Reset_Handler
 */
-
-/* Application main function */
-int app_main (void) {
+void nonsecure_app_start (uint32_t ns_app_start_addr) {
   uint32_t  Stack_NS;
   NS_Func_t ResetHandler_NS;
-
-  printf("Hello World!\n");
 
   /* Read the address of the main stack in non-secure state */
   Stack_NS = *((volatile uint32_t *)(NS_APP_START_ADDRESS));
@@ -57,6 +84,20 @@ int app_main (void) {
 
   /* Call non-secure Reset Handler and start executing non-secure application */
   ResetHandler_NS();
+}
+
+/*
+  Application main function.
+*/
+int app_main (void) {
+
+  printf("Hello World!\n");
+
+  /* Boot core1 */
+  core1_enable(CORE1_BOOT_ADDRESS);
+
+  /* Switch to the non-secure application */
+  nonsecure_app_start(NS_APP_START_ADDRESS);
 
   /* Non-secure application does not return */
   for (;;){;}

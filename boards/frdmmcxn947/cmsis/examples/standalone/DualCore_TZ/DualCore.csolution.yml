@@ -29,6 +29,6 @@ solution:
       optimize: balanced
 
   projects:
+    - project: ./cm33_core1/core1.cproject.yml
     - project: ./cm33_core0/secure/core0_s.cproject.yml
     - project: ./cm33_core0/non-secure/core0_ns.cproject.yml
-    - project: ./cm33_core1/core1.cproject.yml

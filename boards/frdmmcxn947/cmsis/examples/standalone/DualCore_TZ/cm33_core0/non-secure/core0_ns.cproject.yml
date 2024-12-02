@@ -14,6 +14,10 @@ project:
     - component: Device:SDK Drivers:mcx_spc
     - component: Device:SDK Drivers:reset
 
+    - component: Device:SDK Utilities:incbin
+      add-path-asm:
+        - $OutDir(core1)$
+
     - component: CMSIS:CORE
     - component: CMSIS Driver:VIO:Board&FRDM-MCXN947
 
@@ -41,6 +45,13 @@ project:
     - group: Documentation
       files:
         - file: ../../README.md
+
+  setups:
+    - setup: AC6
+      for-compiler: AC6
+      misc:
+      - Link:
+        - --keep="*(*core1_code)"
 
   linker:
     - regions: ../../regions_MCXN947VDF.h

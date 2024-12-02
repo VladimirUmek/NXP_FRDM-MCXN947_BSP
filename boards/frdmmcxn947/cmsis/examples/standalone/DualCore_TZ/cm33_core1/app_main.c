@@ -17,33 +17,48 @@
  * limitations under the License.
  *---------------------------------------------------------------------------*/
 
-#include <stdio.h>
+#include "RTE_Components.h"
+#include CMSIS_device_header
 
 #include "main.h"
 
-#include "cmsis_os2.h"
 #include "cmsis_vio.h"
+#include "fsl_mailbox.h"
+
+#define CORE0_MAILBOX_ID    kMAILBOX_CM33_Core0
+
+uint32_t core1_loop_counter = 0xFFFFFFFFU;
 
 /*-----------------------------------------------------------------------------
- * Application main thread
- *----------------------------------------------------------------------------*/
-__NO_RETURN void app_main_thread (void *argument) {
-  (void)argument;
-
-  for (;;) {
-    vioSetSignal(vioLED1, vioLEDoff);         // Switch LED1 off
-    osDelay(500U);                            // Delay 500 ms
-    vioSetSignal(vioLED1, vioLEDon);          // Switch LED1 on
-    osDelay(500U);                            // Delay 500 ms
-  }
-}
-
-/*-----------------------------------------------------------------------------
- * Application initialization
+ * Application main function
  *----------------------------------------------------------------------------*/
 int app_main (void) {
-  osKernelInitialize();                         /* Initialize CMSIS-RTOS2 */
-  osThreadNew(app_main_thread, NULL, NULL);
-  osKernelStart();                              /* Start thread execution */
-  return 0;
+  uint32_t n;
+
+  /* Initialize Inter-CPU Mailbox */
+  MAILBOX_Init(MAILBOX);
+
+  /* Send the first mailbox message to the primary core */
+  MAILBOX_SetValue(MAILBOX, CORE0_MAILBOX_ID, 0);
+
+  /* Initialize loop counter */
+  core1_loop_counter = 0;
+
+  while (1) {
+    /* Switch LED1 on */
+    vioSetSignal(vioLED1, vioLEDon);
+    /* Wait a bit */
+    for(n=SystemCoreClock/20; n != 0; n--) { __NOP(); }
+
+    /* Switch LED1 off */
+    vioSetSignal(vioLED1, vioLEDoff);
+    /* Wait a bit */
+    for(n=SystemCoreClock/20; n != 0; n--) { __NOP(); }
+
+    /* Increment loop counter */
+    core1_loop_counter += 1;
+
+    /* Send the loop counter value to the primary core */
+    MAILBOX_SetValue(MAILBOX, CORE0_MAILBOX_ID, core1_loop_counter);
+  }
 }
