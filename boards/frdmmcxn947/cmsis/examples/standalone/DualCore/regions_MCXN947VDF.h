@@ -33,6 +33,7 @@
 // </h>
 // </h>
 
+#if 1 /* ROM */
 // <h> Core 1 Memory Configuration
 // ===============================
 //   <o> ROM Base Address <0x0-0xFFFFFFFF:8>
@@ -58,6 +59,35 @@
 #define CORE1_HEAP_SIZE     0x00000400
 // </h>
 
+#else /* RAM */
+
+// <h> Core 1 Memory Configuration
+// ===============================
+//   <o> ROM Base Address <0x0-0xFFFFFFFF:8>
+//   <i> Defines base address of memory region. Default: 0x00000000
+//   <i> Contains Startup and Vector Table
+#define CORE1_ROM_BASE      0x2004E000/*0x000C0000*/
+//   <o> ROM Region Size [bytes] <0x0-0xFFFFFFFF:8>
+//   <i> Defines size of memory region. Default: 0x00200000
+#define CORE1_ROM_SIZE      0xD000/*0x00040000*/
+
+//   <o> RAM Base Address <0x0-0xFFFFFFFF:8>
+//   <i> Defines base address of memory region. Default: 0x20000000
+//   <i> Contains uninitialized RAM, Stack, and Heap
+#define CORE1_RAM_BASE      0x2005B000/*0x2004E000*/
+//   <o> RAM Region Size [bytes] <0x0-0xFFFFFFFF:8>
+//   <i> Defines size of memory region. Default: 0x00068000
+#define CORE1_RAM_SIZE      0x0000D000/*0x0001A000*/
+
+//   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
+#define CORE1_STACK_SIZE    0x00000400
+
+//   <o> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+#define CORE1_HEAP_SIZE     0x00000400
+// </h>
+
+#endif
+
 //-------- End of configuration section --------
 
 // Map defines to match linker script expectations
@@ -69,8 +99,8 @@
 #define __STACK_SIZE    CORE0_STACK_SIZE
 #define __HEAP_SIZE     CORE0_HEAP_SIZE
 
-//#define __ROM1_BASE     CORE1_ROM_BASE
-//#define __ROM1_SIZE     CORE1_ROM_SIZE
+#define __ROM1_BASE     CORE1_ROM_BASE
+#define __ROM1_SIZE     CORE1_ROM_SIZE
 #endif
 
 #ifdef CPU_MCXN947VDF_cm33_core1

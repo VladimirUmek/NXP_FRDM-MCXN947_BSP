@@ -16,14 +16,14 @@ project:
     - component: Device:SDK Drivers:clock
     - component: Device:SDK Drivers:common
     - component: Device:SDK Drivers:gpio
+    - component: Device:SDK Drivers:mailbox
     - component: Device:SDK Drivers:mcx_spc
+    - component: Device:SDK Drivers:port
     - component: Device:SDK Drivers:reset
 
-    - component: CMSIS:CORE
+    - component: Device:SDK Utilities:str
 
-    - component: CMSIS:OS Tick:SysTick
-    - component: CMSIS:RTOS2:Keil RTX5&Source
-    - component: CMSIS Driver:VIO:Board
+    - component: CMSIS:CORE
 
   groups:
     - group: App

@@ -64,6 +64,7 @@ LR_ROM0 __ROM0_BASE __ROM0_SIZE  {
   STACKSEAL +0 EMPTY __STACKSEAL_SIZE {             ; Reserve empty region for stack seal immediately after stack
   }
 #endif
+}
 
 LR_CORE1_IMAGE CORE1_ROM_BASE {
   CORE1_REGION CORE1_ROM_BASE CORE1_ROM_SIZE {

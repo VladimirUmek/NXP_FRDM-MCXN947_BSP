@@ -15,32 +15,94 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *---------------------------------------------------------------------------*/
-
+#if 0
 #include "main.h"
 
-#include "cmsis_os2.h"
-#include "cmsis_vio.h"
+//#include "cmsis_os2.h"
+//#include "cmsis_vio.h"
 
 /*-----------------------------------------------------------------------------
  * Application main thread
  *----------------------------------------------------------------------------*/
-__NO_RETURN void app_main_thread (void *argument) {
-  (void)argument;
+// __NO_RETURN void app_main_thread (void *argument) {
+//   (void)argument;
 
-  for (;;) {
-    vioSetSignal(vioLED1, vioLEDoff);         // Switch LED1 off
-    osDelay(500U);                            // Delay 500 ms
-    vioSetSignal(vioLED1, vioLEDon);          // Switch LED1 on
-    osDelay(500U);                            // Delay 500 ms
-  }
-}
+//   for (;;) {
+//     vioSetSignal(vioLED1, vioLEDoff);         // Switch LED1 off
+//     osDelay(500U);                            // Delay 500 ms
+//     vioSetSignal(vioLED1, vioLEDon);          // Switch LED1 on
+//     osDelay(500U);                            // Delay 500 ms
+//   }
+// }
 
 /*-----------------------------------------------------------------------------
  * Application initialization
  *----------------------------------------------------------------------------*/
 int app_main (void) {
-  osKernelInitialize();                         /* Initialize CMSIS-RTOS2 */
-  osThreadNew(app_main_thread, NULL, NULL);
-  osKernelStart();                              /* Start thread execution */
+  for (;;) {
+    // vioSetSignal(vioLED1, vioLEDoff);         // Switch LED1 off
+    // osDelay(500U);                            // Delay 500 ms
+    //vioSetSignal(vioLED1, vioLEDon);          // Switch LED1 on
+    // osDelay(500U);                            // Delay 500 ms
+  }
+  // osKernelInitialize();                         /* Initialize CMSIS-RTOS2 */
+  // osThreadNew(app_main_thread, NULL, NULL);
+  // osKernelStart();                              /* Start thread execution */
   return 0;
+}
+#endif
+
+#include "pin_mux.h"
+#include "fsl_mailbox.h"
+
+#include "fsl_common.h"
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
+#define PRIMARY_CORE_MAILBOX_CPU_ID   kMAILBOX_CM33_Core0
+#define SECONDARY_CORE_MAILBOX_CPU_ID kMAILBOX_CM33_Core1
+
+#define START_EVENT 1234
+
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
+
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+volatile uint32_t g_msg;
+
+/*******************************************************************************
+ * Code
+ ******************************************************************************/
+void MAILBOX_IRQHandler()
+{
+    g_msg = MAILBOX_GetValue(MAILBOX, SECONDARY_CORE_MAILBOX_CPU_ID);
+    MAILBOX_ClearValueBits(MAILBOX, SECONDARY_CORE_MAILBOX_CPU_ID, 0xffffffff);
+    g_msg++;
+    MAILBOX_SetValue(MAILBOX, PRIMARY_CORE_MAILBOX_CPU_ID, g_msg);
+}
+
+/*!
+ * @brief Main function
+ */
+int app_main (void) {
+    /* Init board hardware.*/
+    /* set BOD VBAT level to 1.65V */
+    //BOARD_InitBootPins();
+
+    /* Initialize Mailbox */
+    MAILBOX_Init(MAILBOX);
+
+    /* Enable mailbox interrupt */
+    NVIC_EnableIRQ(MAILBOX_IRQn);
+
+    /* Let the other side know the application is up and running */
+    MAILBOX_SetValue(MAILBOX, PRIMARY_CORE_MAILBOX_CPU_ID, (uint32_t)START_EVENT);
+
+    while (1)
+    {
+        __WFI();
+    }
 }

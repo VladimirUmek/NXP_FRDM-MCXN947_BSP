@@ -24,6 +24,7 @@ project:
     - component: Device:SDK Drivers:lpuart
     - component: Device:SDK Drivers:lpuart_adapter
     - component: Device:SDK Drivers:lpuart_edma
+    - component: Device:SDK Drivers:mailbox
     - component: Device:SDK Drivers:mcx_spc
     - component: Device:SDK Drivers:reset
 
