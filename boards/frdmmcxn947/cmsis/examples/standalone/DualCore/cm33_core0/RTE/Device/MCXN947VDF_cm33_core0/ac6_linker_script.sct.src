@@ -65,45 +65,8 @@ LR_ROM0 __ROM0_BASE __ROM0_SIZE  {
   }
 #endif
 
-#if __RAM1_SIZE > 0
-  RW_RAM1 __RAM1_BASE __RAM1_SIZE  {
-   .ANY (+RW +ZI)
-  }
-#endif
-
-#if __RAM2_SIZE > 0
-  RW_RAM2 __RAM2_BASE __RAM2_SIZE  {
-   .ANY (+RW +ZI)
-  }
-#endif
-
-#if __RAM3_SIZE > 0
-  RW_RAM3 __RAM3_BASE __RAM3_SIZE  {
-   .ANY (+RW +ZI)
-  }
-#endif
-}
-
-#if __ROM1_SIZE > 0
-LR_ROM1 __ROM1_BASE __ROM1_SIZE  {
-  ER_ROM1 +0 __ROM1_SIZE {
-   .ANY (+RO +XO)
+LR_CORE1_IMAGE CORE1_ROM_BASE {
+  CORE1_REGION CORE1_ROM_BASE CORE1_ROM_SIZE {
+    * (.core1_code)
   }
 }
-#endif
-
-#if __ROM2_SIZE > 0
-LR_ROM2 __ROM2_BASE __ROM2_SIZE  {
-  ER_ROM2 +0 __ROM2_SIZE {
-   .ANY (+RO +XO)
-  }
-}
-#endif
-
-#if __ROM3_SIZE > 0
-LR_ROM3 __ROM3_BASE __ROM3_SIZE  {
-  ER_ROM3 +0 __ROM3_SIZE {
-   .ANY (+RO +XO)
-  }
-}
-#endif

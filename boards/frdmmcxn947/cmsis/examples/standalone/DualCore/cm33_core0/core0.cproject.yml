@@ -17,10 +17,29 @@ project:
 
     - component: Device:SDK Drivers:clock
     - component: Device:SDK Drivers:common
+    - component: Device:SDK Drivers:edma
+    - component: Device:SDK Drivers:edma_soc
+    - component: Device:SDK Drivers:gpio
+    - component: Device:SDK Drivers:lpflexcomm
+    - component: Device:SDK Drivers:lpuart
+    - component: Device:SDK Drivers:lpuart_adapter
+    - component: Device:SDK Drivers:lpuart_edma
     - component: Device:SDK Drivers:mcx_spc
     - component: Device:SDK Drivers:reset
 
+    - component: Device:SDK Utilities:assert_lite
+    - component: Device:SDK Utilities:debug_console_lite
+    - component: Device:SDK Utilities:str
+
+    - component: Device:SDK Utilities:incbin
+      #add-path-asm:
+      #  - ../out/core1/MCXN947/Debug
+
     - component: CMSIS:CORE
+    - component: CMSIS Driver:VIO:Board&FRDM-MCXN947
+
+    - component: CMSIS:OS Tick:SysTick
+    - component: CMSIS:RTOS2:Keil RTX5&Source
 
   groups:
     - group: App
@@ -36,7 +55,16 @@ project:
       files:
         - file: ../README.md
 
+  setups:
+    - setup: AC6
+      for-compiler: AC6
+      misc:
+      - ASM:
+        - "-I$ProjectDir()$/../out/core1/MCXN947/Debug"
+        Link:
+        - --keep="*(*core1_code)"
+
   linker:
     - regions: ../regions_MCXN947VDF.h
       define:
-        - CPU_MCXN947VDF_cm33_core0 # DFP provides this define but seems it is not passed to linker
+        - CPU_MCXN947VDF_cm33_core0

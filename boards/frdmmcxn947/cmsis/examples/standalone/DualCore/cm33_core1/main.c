@@ -28,9 +28,9 @@
 int main (void) {
 
   /* System initialization */
-  BOARD_InitBootClocks();
-  BOARD_InitBootPeripherals();
-  BOARD_InitBootPins();
+  //BOARD_InitBootClocks();
+  //BOARD_InitBootPeripherals();
+  //BOARD_InitBootPins();
 
   return (app_main());
 }

@@ -16,8 +16,108 @@
  * limitations under the License.
  *---------------------------------------------------------------------------*/
 
-/* Application main function */
-int app_main (void) {
+#include <stdio.h>
 
-  for(;;);
+#include "RTE_Components.h"
+#include CMSIS_device_header
+
+#include "main.h"
+
+#include "cmsis_os2.h"                  // ::CMSIS:RTOS2
+#include "cmsis_vio.h"
+
+static osThreadId_t tid_thrLED;         // Thread id of thread: LED
+static osThreadId_t tid_thrButton;      // Thread id of thread: Button
+
+/* Start address of the core1 application */
+#define CORE1_BOOT_ADDRESS 0x000C0000
+
+void core1_enable (uint32_t boot_address) {
+  uint32_t cpuctrl;
+
+  /* Set CPU1 boot source */
+  SYSCON->CPBOOT = (boot_address & SYSCON_CPBOOT_CPBOOT_MASK);
+
+  /* Read out CPU Control register */
+  cpuctrl = SYSCON->CPUCTRL;
+  /* Set Write Protect mask, enable CPU1 clock but keep it under reset */
+  cpuctrl |= (0xC0C4 << 16) | SYSCON_CPUCTRL_CPU1RSTEN_MASK | SYSCON_CPUCTRL_CPU1CLKEN_MASK;
+  SYSCON->CPUCTRL = cpuctrl;
+
+  /* Release CPU1 from reset */
+  SYSCON->CPUCTRL = cpuctrl & ~SYSCON_CPUCTRL_CPU1RSTEN_MASK;
+}
+
+/*-----------------------------------------------------------------------------
+  thrLED: blink LED
+ *----------------------------------------------------------------------------*/
+static __NO_RETURN void thrLED (void *argument) {
+  uint32_t active_flag = 0U;
+
+  (void)argument;
+
+  for (;;) {
+    if (osThreadFlagsWait(1U, osFlagsWaitAny, 0U) == 1U) {
+      active_flag ^= 1U;
+    }
+
+    if (active_flag == 1U) {
+      vioSetSignal(vioLED0, vioLEDoff);         // Switch LED0 off
+      osDelay(100U);                            // Delay 100 ms
+      vioSetSignal(vioLED0, vioLEDon);          // Switch LED0 on
+      osDelay(100U);                            // Delay 100 ms
+    }
+    else {
+      vioSetSignal(vioLED0, vioLEDon);          // Switch LED0 on
+      osDelay(500U);                            // Delay 500 ms
+      vioSetSignal(vioLED0, vioLEDoff);         // Switch LED0 off
+      osDelay(500U);                            // Delay 500 ms
+    }
+  }
+}
+
+/*-----------------------------------------------------------------------------
+  thrButton: check Button state
+ *----------------------------------------------------------------------------*/
+static __NO_RETURN void thrButton (void *argument) {
+  uint32_t last = 0U;
+  uint32_t state;
+
+  (void)argument;
+
+  for (;;) {
+    state = (vioGetSignal(vioBUTTON0));           // Get pressed Button state
+    if (state != last) {
+      if (state == 1U) {
+        osThreadFlagsSet(tid_thrLED, 1U);         // Set flag to thrLED
+      }
+      last = state;
+    }
+    osDelay(100U);
+  }
+}
+
+/*-----------------------------------------------------------------------------
+ * Application main thread
+ *----------------------------------------------------------------------------*/
+__NO_RETURN void app_main_thread (void *argument) {
+
+  //printf("Blinky example\n");
+  core1_enable(CORE1_BOOT_ADDRESS);
+
+  tid_thrLED = osThreadNew(thrLED, NULL, NULL);         // Create LED thread
+  tid_thrButton = osThreadNew(thrButton, NULL, NULL);   // Create Button thread
+
+  for (;;) {                            // Loop forever
+  }
+}
+
+/*-----------------------------------------------------------------------------
+ * Application initialization
+ *----------------------------------------------------------------------------*/
+int app_main (void) {
+  osKernelInitialize();                         /* Initialize CMSIS-RTOS2 */
+  osThreadNew(app_main_thread, NULL, NULL);
+  osKernelStart();                              /* Start thread execution */
+  return 0;
 }

@@ -16,8 +16,31 @@
  * limitations under the License.
  *---------------------------------------------------------------------------*/
 
-/* Application main function */
-int app_main (void) {
+#include "main.h"
 
-  for(;;);
+#include "cmsis_os2.h"
+#include "cmsis_vio.h"
+
+/*-----------------------------------------------------------------------------
+ * Application main thread
+ *----------------------------------------------------------------------------*/
+__NO_RETURN void app_main_thread (void *argument) {
+  (void)argument;
+
+  for (;;) {
+    vioSetSignal(vioLED1, vioLEDoff);         // Switch LED1 off
+    osDelay(500U);                            // Delay 500 ms
+    vioSetSignal(vioLED1, vioLEDon);          // Switch LED1 on
+    osDelay(500U);                            // Delay 500 ms
+  }
+}
+
+/*-----------------------------------------------------------------------------
+ * Application initialization
+ *----------------------------------------------------------------------------*/
+int app_main (void) {
+  osKernelInitialize();                         /* Initialize CMSIS-RTOS2 */
+  osThreadNew(app_main_thread, NULL, NULL);
+  osKernelStart();                              /* Start thread execution */
+  return 0;
 }

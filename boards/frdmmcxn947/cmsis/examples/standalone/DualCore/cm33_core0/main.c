@@ -18,6 +18,7 @@
 
 #include "RTE_Components.h"
 #include  CMSIS_device_header
+#include "cmsis_vio.h"
 
 #include "clock_config.h"
 #include "peripherals.h"
@@ -31,6 +32,9 @@ int main (void) {
   BOARD_InitBootClocks();
   BOARD_InitBootPeripherals();
   BOARD_InitBootPins();
+
+  /* Initialize Virtual I/O */
+  vioInit();
 
   return (app_main());
 }
