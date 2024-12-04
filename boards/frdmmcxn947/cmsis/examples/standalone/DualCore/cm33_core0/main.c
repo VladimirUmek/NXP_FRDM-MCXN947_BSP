@@ -33,6 +33,10 @@ int main (void) {
   BOARD_InitBootPeripherals();
   BOARD_InitBootPins();
 
+  /* Configure CPU1 as Secure and privileged Master */
+  //AHBSC->MASTER_SEC_LEVEL = AHBSC->MASTER_SEC_LEVEL | 0x8000000CU;
+  //AHBSC->MASTER_SEC_ANTI_POL_REG = 0xBFFFFFF3U;
+
   /* Initialize Virtual I/O */
   vioInit();
 

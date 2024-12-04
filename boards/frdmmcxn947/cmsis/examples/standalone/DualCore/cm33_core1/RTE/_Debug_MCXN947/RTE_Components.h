@@ -15,6 +15,9 @@
  */
 #define CMSIS_device_header "fsl_device_registers.h"
 
+/* NXP::CMSIS Driver:VIO:Board&FRDM-MCXN947@1.0.0 */
+#define RTE_VIO_BOARD
+#define RTE_VIO_FRDM_MCXN947
 
 
 #endif /* RTE_COMPONENTS_H */

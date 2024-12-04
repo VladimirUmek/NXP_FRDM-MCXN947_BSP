@@ -51,7 +51,7 @@ int app_main (void) {
   return 0;
 }
 #endif
-
+#include "cmsis_vio.h"
 #include "pin_mux.h"
 #include "fsl_mailbox.h"
 
@@ -88,9 +88,7 @@ void MAILBOX_IRQHandler()
  * @brief Main function
  */
 int app_main (void) {
-    /* Init board hardware.*/
-    /* set BOD VBAT level to 1.65V */
-    //BOARD_InitBootPins();
+  uint32_t n;
 
     /* Initialize Mailbox */
     MAILBOX_Init(MAILBOX);
@@ -103,6 +101,14 @@ int app_main (void) {
 
     while (1)
     {
-        __WFI();
+        vioSetSignal(vioLED1, vioLEDon);          // Switch LED1 on
+        for(n=150000000/4/8; n != 0; n--) {
+          __NOP();
+        }
+
+        vioSetSignal(vioLED1, vioLEDoff);         // Switch LED1 off
+        for(n=150000000/4/8; n != 0; n--) {
+          __NOP();
+        }
     }
 }

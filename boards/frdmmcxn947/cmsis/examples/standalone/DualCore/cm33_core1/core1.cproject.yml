@@ -24,6 +24,7 @@ project:
     - component: Device:SDK Utilities:str
 
     - component: CMSIS:CORE
+    - component: CMSIS Driver:VIO:Board&FRDM-MCXN947
 
   groups:
     - group: App

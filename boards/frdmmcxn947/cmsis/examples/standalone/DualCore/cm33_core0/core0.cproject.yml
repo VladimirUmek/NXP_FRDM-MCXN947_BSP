@@ -1,7 +1,7 @@
 project:
   device: :cm33_core0
-  processor:
-    trustzone: off
+  #processor:
+    #trustzone: off
 
   generators:
     options:
