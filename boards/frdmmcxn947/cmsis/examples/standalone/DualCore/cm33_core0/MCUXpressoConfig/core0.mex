@@ -17,6 +17,9 @@
       <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
       <update_include_paths>true</update_include_paths>
       <generate_registers_defines>false</generate_registers_defines>
+      <project_links>
+         <project_link path="C:\D\GitHub\VladimirUmek\NXP_FRDM-MCXN947_BSP\boards\frdmmcxn947\cmsis\examples\standalone\DualCore\tmp"/>
+      </project_links>
    </preferences>
    <tools>
       <pins name="Pins" version="16.0" enabled="true" update_project_code="true">
@@ -719,13 +722,16 @@
             </component>
          </components>
       </periphs>
-      <tee name="TEE" version="7.0" enabled="false" update_project_code="true">
-         <generated_project_files/>
+      <tee name="TEE" version="7.0" enabled="true" update_project_code="true">
+         <generated_project_files>
+            <file path="../cm33_core0/MCUXpressoConfig/trustzone/resource_config.c" update_enabled="true"/>
+            <file path="../cm33_core0/MCUXpressoConfig/trustzone/resource_config.h" update_enabled="true"/>
+         </generated_project_files>
          <tee_profile>
-            <processor_version>0.0.0</processor_version>
+            <processor_version>16.3.0</processor_version>
             <tool_options>
                <option id="_output_type_" value="c_code"/>
-               <option id="_legacy_source_names_" value="yes"/>
+               <option id="_legacy_source_names_" value="no"/>
                <option id="_resilient_code_reg_writes_" value="no"/>
             </tool_options>
          </tee_profile>
@@ -751,7 +757,7 @@
                <relative_region start="0" size="268435456" security="s_priv" memory="FlexSPI0_1"/>
                <masters>
                   <master id="COOLFLUXI" security="ns_user"/>
-                  <master id="CPU1" security="ns_user"/>
+                  <master id="CPU1" security="s_priv"/>
                   <master id="DMA3_0" security="ns_user"/>
                   <master id="DMA3_1" security="ns_user"/>
                   <master id="ETHERNET" security="ns_user"/>
@@ -770,7 +776,6 @@
                   <peripheral id="AHBSC_ALIAS1" security="s_priv"/>
                   <peripheral id="AHBSC_ALIAS2" security="s_priv"/>
                   <peripheral id="AHBSC_ALIAS3" security="s_priv"/>
-                  <peripheral id="ATX0" security="s_priv"/>
                   <peripheral id="BSP32_0" security="s_priv"/>
                   <peripheral id="CACHE64_POLSEL0" security="s_priv"/>
                   <peripheral id="CAN0_RULE0" security="s_priv"/>
@@ -880,7 +885,6 @@
                   <peripheral id="MAILBOX" security="s_priv"/>
                   <peripheral id="MBC" security="s_priv"/>
                   <peripheral id="MRT0" security="s_priv"/>
-                  <peripheral id="MTR0" security="s_priv"/>
                   <peripheral id="NPU" security="s_priv"/>
                   <peripheral id="NPX0" security="s_priv"/>
                   <peripheral id="OPAMP0" security="s_priv"/>
@@ -1776,6 +1780,7 @@
                <region start="0" size="32" security="ns" enabled="false" index="7"/>
             </sau>
             <global_options>
+               <option id="_trigger_sources_" value="yes"/>
                <option id="GPIO0_PCNS" value="no"/>
                <option id="GPIO0_ICNS" value="no"/>
                <option id="GPIO0_PCNP" value="no"/>

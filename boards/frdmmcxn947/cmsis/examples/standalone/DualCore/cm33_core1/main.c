@@ -19,18 +19,15 @@
 #include "RTE_Components.h"
 #include  CMSIS_device_header
 
-#include "clock_config.h"
-#include "peripherals.h"
-#include "pin_mux.h"
-
 #include "main.h"
+
+#ifndef CORE1_SYSTEM_CORE_CLOCK
+#define CORE1_SYSTEM_CORE_CLOCK     150000000
+#endif
 
 int main (void) {
 
-  /* System initialization */
-  //BOARD_InitBootClocks();
-  //BOARD_InitBootPeripherals();
-  //BOARD_InitBootPins();
+  SystemCoreClock = CORE1_SYSTEM_CORE_CLOCK;
 
   return (app_main());
 }

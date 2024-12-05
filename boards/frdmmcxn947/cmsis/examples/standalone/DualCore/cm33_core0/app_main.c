@@ -25,13 +25,34 @@
 
 #include "cmsis_os2.h"                  // ::CMSIS:RTOS2
 #include "cmsis_vio.h"
-
-static osThreadId_t tid_thrLED;         // Thread id of thread: LED
-static osThreadId_t tid_thrButton;      // Thread id of thread: Button
+#include "fsl_mailbox.h"
 
 /* Start address of the core1 application */
 #define CORE1_BOOT_ADDRESS  0x000C0000
 
+/* Primary core mailbox id */
+#define CORE0_MAILBOX_ID    kMAILBOX_CM33_Core0
+
+/* Number of while loops executed by the secondary core */
+volatile uint32_t core1_loops = 0xFFFFFFFFU;
+
+static osThreadId_t tid_thrLED;         // Thread id of thread: LED
+static osThreadId_t tid_thrButton;      // Thread id of thread: Button
+
+/*-----------------------------------------------------------------------------
+ * MAILBOX Interrupt Handler
+ *----------------------------------------------------------------------------*/
+void MAILBOX_IRQHandler (void) {
+  /* Get mailbox message from core1 for core0 */
+  core1_loops = MAILBOX_GetValue(MAILBOX, CORE0_MAILBOX_ID);
+
+  /* Clear interrupt bits */
+  MAILBOX_ClearValueBits(MAILBOX, CORE0_MAILBOX_ID, 0xFFFFFFFF);
+}
+
+/*-----------------------------------------------------------------------------
+ * Boot core1
+ *----------------------------------------------------------------------------*/
 void core1_enable (uint32_t boot_address) {
   uint32_t cpuctrl;
 
@@ -97,65 +118,26 @@ static __NO_RETURN void thrButton (void *argument) {
   }
 }
 
-#include "fsl_mailbox.h"
-#define PRIMARY_CORE_MAILBOX_CPU_ID   kMAILBOX_CM33_Core0
-#define SECONDARY_CORE_MAILBOX_CPU_ID kMAILBOX_CM33_Core1
-
-#define START_EVENT 1234
-
-volatile uint32_t g_msg = 1;
-/* For the flow control */
-volatile bool g_secondary_core_started = false;
-
-/* When the secondary core writes to the primary core mailbox register it causes call of this irq handler,
-   in which the received value is read, incremented and sent again to the secondary core */
-void MAILBOX_IRQHandler()
-{
-    if (!g_secondary_core_started)
-    {
-        if (START_EVENT == MAILBOX_GetValue(MAILBOX, PRIMARY_CORE_MAILBOX_CPU_ID))
-        {
-            g_secondary_core_started = true;
-        }
-        MAILBOX_ClearValueBits(MAILBOX, PRIMARY_CORE_MAILBOX_CPU_ID, 0xffffffff);
-    }
-    else
-    {
-        g_msg = MAILBOX_GetValue(MAILBOX, PRIMARY_CORE_MAILBOX_CPU_ID);
-        MAILBOX_ClearValueBits(MAILBOX, PRIMARY_CORE_MAILBOX_CPU_ID, 0xffffffff);
-        //PRINTF("Read value from the primary core mailbox register: %d\r\n", g_msg);
-        g_msg++;
-        //PRINTF("Write to the secondary core mailbox register: %d\r\n", g_msg);
-        MAILBOX_SetValue(MAILBOX, SECONDARY_CORE_MAILBOX_CPU_ID, g_msg);
-    }
-}
-
 /*-----------------------------------------------------------------------------
  * Application main thread
  *----------------------------------------------------------------------------*/
 __NO_RETURN void app_main_thread (void *argument) {
 
-  //printf("Blinky example\n");
+  /* Initialize Inter-CPU Mailbox */
+  MAILBOX_Init(MAILBOX);
 
-    /* Init Mailbox */
-    MAILBOX_Init(MAILBOX);
+  /* Enable mailbox interrupt */
+  NVIC_EnableIRQ(MAILBOX_IRQn);
 
-    /* Enable mailbox interrupt */
-    NVIC_EnableIRQ(MAILBOX_IRQn);
-
+  /* Boot core1 */
   core1_enable(CORE1_BOOT_ADDRESS);
 
-    /* Wait for start and initialization of secondary core */
-    while (!g_secondary_core_started)
-        ;
+  /* Create LED and Button threads */
+  tid_thrLED = osThreadNew(thrLED, NULL, NULL);
+  tid_thrButton = osThreadNew(thrButton, NULL, NULL);
 
-    /* Write g_msg to the secondary core mailbox register - it causes interrupt on the secondary core */
-    MAILBOX_SetValue(MAILBOX, SECONDARY_CORE_MAILBOX_CPU_ID, g_msg);
-
-  tid_thrLED = osThreadNew(thrLED, NULL, NULL);         // Create LED thread
-  tid_thrButton = osThreadNew(thrButton, NULL, NULL);   // Create Button thread
-
-  for (;;) {                            // Loop forever
+  /* Loop forever */
+  for (;;) {
   }
 }
 

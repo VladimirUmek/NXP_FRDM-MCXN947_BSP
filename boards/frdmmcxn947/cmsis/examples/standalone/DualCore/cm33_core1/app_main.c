@@ -15,100 +15,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *---------------------------------------------------------------------------*/
-#if 0
+
+#include "RTE_Components.h"
+#include CMSIS_device_header
+
 #include "main.h"
 
-//#include "cmsis_os2.h"
-//#include "cmsis_vio.h"
-
-/*-----------------------------------------------------------------------------
- * Application main thread
- *----------------------------------------------------------------------------*/
-// __NO_RETURN void app_main_thread (void *argument) {
-//   (void)argument;
-
-//   for (;;) {
-//     vioSetSignal(vioLED1, vioLEDoff);         // Switch LED1 off
-//     osDelay(500U);                            // Delay 500 ms
-//     vioSetSignal(vioLED1, vioLEDon);          // Switch LED1 on
-//     osDelay(500U);                            // Delay 500 ms
-//   }
-// }
-
-/*-----------------------------------------------------------------------------
- * Application initialization
- *----------------------------------------------------------------------------*/
-int app_main (void) {
-  for (;;) {
-    // vioSetSignal(vioLED1, vioLEDoff);         // Switch LED1 off
-    // osDelay(500U);                            // Delay 500 ms
-    //vioSetSignal(vioLED1, vioLEDon);          // Switch LED1 on
-    // osDelay(500U);                            // Delay 500 ms
-  }
-  // osKernelInitialize();                         /* Initialize CMSIS-RTOS2 */
-  // osThreadNew(app_main_thread, NULL, NULL);
-  // osKernelStart();                              /* Start thread execution */
-  return 0;
-}
-#endif
 #include "cmsis_vio.h"
-#include "pin_mux.h"
 #include "fsl_mailbox.h"
 
-#include "fsl_common.h"
-/*******************************************************************************
- * Definitions
- ******************************************************************************/
-#define PRIMARY_CORE_MAILBOX_CPU_ID   kMAILBOX_CM33_Core0
-#define SECONDARY_CORE_MAILBOX_CPU_ID kMAILBOX_CM33_Core1
+#define CORE0_MAILBOX_ID    kMAILBOX_CM33_Core0
 
-#define START_EVENT 1234
+uint32_t core1_loop_counter = 0xFFFFFFFFU;
 
-/*******************************************************************************
- * Prototypes
- ******************************************************************************/
-
-/*******************************************************************************
- * Variables
- ******************************************************************************/
-volatile uint32_t g_msg;
-
-/*******************************************************************************
- * Code
- ******************************************************************************/
-void MAILBOX_IRQHandler()
-{
-    g_msg = MAILBOX_GetValue(MAILBOX, SECONDARY_CORE_MAILBOX_CPU_ID);
-    MAILBOX_ClearValueBits(MAILBOX, SECONDARY_CORE_MAILBOX_CPU_ID, 0xffffffff);
-    g_msg++;
-    MAILBOX_SetValue(MAILBOX, PRIMARY_CORE_MAILBOX_CPU_ID, g_msg);
-}
-
-/*!
- * @brief Main function
- */
+/*-----------------------------------------------------------------------------
+ * Application main function
+ *----------------------------------------------------------------------------*/
 int app_main (void) {
   uint32_t n;
 
-    /* Initialize Mailbox */
-    MAILBOX_Init(MAILBOX);
+  /* Initialize Inter-CPU Mailbox */
+  MAILBOX_Init(MAILBOX);
 
-    /* Enable mailbox interrupt */
-    NVIC_EnableIRQ(MAILBOX_IRQn);
+  /* Send the first mailbox message to the primary core */
+  MAILBOX_SetValue(MAILBOX, CORE0_MAILBOX_ID, 0);
 
-    /* Let the other side know the application is up and running */
-    MAILBOX_SetValue(MAILBOX, PRIMARY_CORE_MAILBOX_CPU_ID, (uint32_t)START_EVENT);
+  /* Initialize loop counter */
+  core1_loop_counter = 0;
 
-    while (1)
-    {
-        vioSetSignal(vioLED1, vioLEDon);          // Switch LED1 on
-        for(n=150000000/4/8; n != 0; n--) {
-          __NOP();
-        }
+  while (1) {
+    /* Switch LED1 on */
+    vioSetSignal(vioLED1, vioLEDon);
+    /* Wait a bit */
+    for(n=SystemCoreClock/20; n != 0; n--) { __NOP(); }
 
-        vioSetSignal(vioLED1, vioLEDoff);         // Switch LED1 off
-        for(n=150000000/4/8; n != 0; n--) {
-          __NOP();
-        }
-    }
+    /* Switch LED1 off */
+    vioSetSignal(vioLED1, vioLEDoff);
+    /* Wait a bit */
+    for(n=SystemCoreClock/20; n != 0; n--) { __NOP(); }
+
+    /* Increment loop counter */
+    core1_loop_counter += 1;
+
+    /* Send the loop counter value to the primary core */
+    MAILBOX_SetValue(MAILBOX, CORE0_MAILBOX_ID, core1_loop_counter);
+  }
 }

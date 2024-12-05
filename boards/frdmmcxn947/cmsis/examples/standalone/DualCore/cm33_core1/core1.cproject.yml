@@ -8,7 +8,7 @@ project:
         name: ConfigTools
 
   components:
-    - component: Device:Config Tools:Init
+    #- component: Device:Config Tools:Init
     - component: Device:Startup
     - component: Device:CMSIS:MCXN947_header
     - component: Device:CMSIS:MCXN947_system
