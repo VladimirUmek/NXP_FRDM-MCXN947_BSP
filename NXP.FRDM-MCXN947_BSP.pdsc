@@ -1798,5 +1798,11 @@
     <template name="Simple Board project" path="/boards/frdmmcxn947/cmsis/templates/Board/Simple" file="Simple.csolution.yml" condition="Template_Board">
       <description>Single-core project without TrustZone using MCUXpresso configured for FRDM-MCXN947 Board</description>
     </template>
+    <template name="DualCore Board project" path="/boards/frdmmcxn947/cmsis/templates/Board/DualCore" file="DualCore.csolution.yml" condition="Template_Board">
+      <description>Dual-core project without TrustZone using MCUXpresso configured for FRDM-MCXN947 Board</description>
+    </template>
+    <template name="DualCore TrustZone Board project" path="/boards/frdmmcxn947/cmsis/templates/Board/DualCore_TZ" file="DualCore_TZ.csolution.yml" condition="Template_Board">
+      <description>Dual-core project with TrustZone using MCUXpresso configured for FRDM-MCXN947 Board</description>
+    </template>
   </csolution>
 </package>
