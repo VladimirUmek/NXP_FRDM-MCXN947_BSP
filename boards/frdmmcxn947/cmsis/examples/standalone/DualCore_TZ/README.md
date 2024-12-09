@@ -1,7 +1,4 @@
-# Dual Core Example
+# Dual Core Project with TrustZone
 
-## Generated Project
-
-```txt
-> cbuild DualCore.csolution.yml --update-rte --packs --toolchain AC6
-```
+The **Dual Core TZ** project is an example project that shows how to setup an application
+that utilizes TrustZone in dual core configuration.

@@ -1,7 +1,3 @@
-# Dual Core Example
+# Dual Core Project
 
-## Generated Project
-
-```txt
-> cbuild DualCore.csolution.yml --update-rte --packs --toolchain AC6
-```
+The **Dual Core** project is an example project that shows how to configure dual core application.
