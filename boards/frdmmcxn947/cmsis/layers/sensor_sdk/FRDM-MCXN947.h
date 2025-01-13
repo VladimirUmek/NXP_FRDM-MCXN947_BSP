@@ -19,7 +19,8 @@
 #ifndef FRDM_MCXN947_H_
 #define FRDM_MCXN947_H_
 
-//TODO: #include "Driver_ETH_MAC.h"
+#include "Driver_ETH_MAC.h"
+#include "Driver_ETH_PHY.h"
 #include "Driver_I2C.h"
 #include "Driver_SPI.h"
 #include "Driver_USART.h"
@@ -58,10 +59,11 @@
 //TODO: #define MIKROBUS_UART       0
 
 // CMSIS Driver instances of Board peripherals
-//TODO: #define CMSIS_DRIVER_ETH    0
+#define CMSIS_DRIVER_ETH    0
 
 // CMSIS Drivers
-//TODO: extern ARM_DRIVER_ETH_MAC   ARM_Driver_ETH_MAC_(CMSIS_DRIVER_ETH);  /* Ethernet      */
+extern ARM_DRIVER_ETH_MAC   ARM_Driver_ETH_MAC_(CMSIS_DRIVER_ETH);  /* Ethernet MAC  */
+extern ARM_DRIVER_ETH_PHY   ARM_Driver_ETH_PHY_(CMSIS_DRIVER_ETH);  /* Ethernet PHY  */
 extern ARM_DRIVER_I2C       ARM_Driver_I2C_(ARDUINO_UNO_I2C);       /* Arduino I2C   */
 extern ARM_DRIVER_SPI       ARM_Driver_SPI_(ARDUINO_UNO_SPI);       /* Arduino SPI   */
 extern ARM_DRIVER_USART     ARM_Driver_USART_(ARDUINO_UNO_UART);    /* Arduino UART  */
