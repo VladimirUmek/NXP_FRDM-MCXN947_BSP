@@ -179,6 +179,12 @@ void BOARD_InitARDUINO_I2C(void);
  */
 void BOARD_InitARDUINO_SPI(void);
 
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void BOARD_InitENETPins(void);
+
 #if defined(__cplusplus)
 }
 #endif

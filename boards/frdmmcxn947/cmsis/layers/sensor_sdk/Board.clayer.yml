@@ -15,7 +15,7 @@ layer:
   connections:
     - connect: FRDM-MCXN947 Board
       provides:
-#        - CMSIS_ETH
+        - CMSIS_ETH
         - CMSIS_VIO
         - ARDUINO_UNO_I2C
         - ARDUINO_UNO_SPI
@@ -68,6 +68,8 @@ layer:
 
   components:
     - component: CMSIS:CORE
+    - component: CMSIS Driver:Ethernet MAC:Custom
+    - component: CMSIS Driver:Ethernet PHY:Custom
     - component: CMSIS Driver:I2C:lpi2c_cmsis
     - component: CMSIS Driver:SPI:lpspi_cmsis
     - component: CMSIS Driver:USART:lpuart_cmsis
@@ -98,6 +100,7 @@ layer:
         - LPFLEXCOMM_INIT_NOT_USED_IN_DRIVER: 1
     - component: Device:SDK Drivers:lpuart_adapter
     - component: Device:SDK Drivers:lpuart_edma
+    - component: Device:SDK Drivers:mcx_enet
     - component: Device:SDK Drivers:mcx_spc
     - component: Device:SDK Drivers:port
     - component: Device:SDK Drivers:reset
@@ -119,6 +122,10 @@ layer:
         - file: ./main.h
         - file: ./FRDM-MCXN947.h
         - file: ./retarget_stdio.c
+        - file: ./CMSIS/Driver/EMAC_MCXN947.c
+        - file: ./CMSIS/Driver/EMAC_MCXN947.h
+        - file: ./CMSIS/Driver/PHY_LAN8741A.c
+        - file: ./CMSIS/Driver/PHY_LAN8741A.h
 
 #    - group: Driver
 #      files:
