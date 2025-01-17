@@ -17,10 +17,10 @@ solution:
 
   # List different hardware targets that are used to deploy the solution.
   target-types:
-    - type: ROM
+    - type: %Name%_ROM
       device: NXP::MCXN947VDF
 
-    - type: RAM
+    - type: %Name%_RAM
       device: NXP::MCXN947VDF
 
   # List of different build configurations.
