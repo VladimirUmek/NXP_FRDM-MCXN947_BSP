@@ -19,9 +19,27 @@ solution:
   target-types:
     - type: %Name%_ROM
       device: NXP::MCXN947VDF
+      variables:
+        # TODO: Replace LinkerScript specification with regions specification and use
+        #       auto generated linker scripts. Below is a temporary solution.
+        # AC6
+        - LinkerScript: RTE/Device/MCXN947VDF_cm33_core0/MCXN947_cm33_core0_flash.scf
+        # GCC
+        #- LinkerScript: RTE/Device/MCXN947VDF_cm33_core0/MCXN947_cm33_core0_flash.ld
+        # IAR
+        #- LinkerScript: RTE/Device/MCXN947VDF_cm33_core0/MCXN947_cm33_core0_flash.icf
 
     - type: %Name%_RAM
       device: NXP::MCXN947VDF
+      variables:
+        # TODO: Replace LinkerScript specification with regions specification and use
+        #       auto generated linker scripts. Below is a temporary solution.
+        # AC6
+        - LinkerScript: RTE/Device/MCXN947VDF_cm33_core0/MCXN947_cm33_core0_ram.scf
+        # GCC
+        #- LinkerScript: RTE/Device/MCXN947VDF_cm33_core0/MCXN947_cm33_core0_ram.ld
+        # IAR
+        #- LinkerScript: RTE/Device/MCXN947VDF_cm33_core0/MCXN947_cm33_core0_ram.icf
 
   # List of different build configurations.
   build-types:
