@@ -17,7 +17,7 @@ solution:
 
   # List different hardware targets that are used to deploy the solution.
   target-types:
-    - type: %Name%_ROM
+    - type: ${Name}_ROM
       device: NXP::MCXN947VDF
       variables:
         # TODO: Replace LinkerScript specification with regions specification and use
@@ -29,7 +29,7 @@ solution:
         # IAR
         #- LinkerScript: RTE/Device/MCXN947VDF_cm33_core0/MCXN947_cm33_core0_flash.icf
 
-    - type: %Name%_RAM
+    - type: ${Name}_RAM
       device: NXP::MCXN947VDF
       variables:
         # TODO: Replace LinkerScript specification with regions specification and use
